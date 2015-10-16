@@ -1,6 +1,13 @@
 # php-mecab Documentation   
 Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab).   
 
+## Contents  
+  - [Installation](#installation)
+  - [Basic Usage](#basic-usage)
+  - [Classes](#classes)
+    - [MeCab_Tagger](#mecab_tagger)
+    - [MeCab_Node](#mecab_node)
+
 ## Installation   
 Coming...   
 
@@ -13,7 +20,7 @@ $mecab = new MeCab_Tagger('-d', '/var/lib/mecab/dic/ipadic-utf8');
 
 Once you have a MeCab_Tagger instance, you can start parsing.  Three methods are useful for basic parsing.    
 
-###### parse($string)  
+#### parse($string)  
 Parses the string and returns the Mecab results as a string.   
 ```
 $results = $mecab->parse('行きます');
@@ -27,7 +34,7 @@ Will produce:
 EOS
 ```
 
-###### parseToNode($string)  
+#### parseToNode($string)  
 Parses the string and returns the Mecab results as an instance of MeCab_Node.  
 ```
 $node = $this->mecab->makeNodes($this->text);
@@ -41,11 +48,13 @@ Will produce:
 BOS/EOS,*,*,*,*,*,*,*,*動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ助動詞,*,*,*,特殊・マス,基本形,ます,マス,マスBOS/EOS,*,*,*,*,*,*,*,*
 ```  
 
-###### mecab_split($string, $dictionary_directory_path)  
+#### mecab_split($string, $dictionary_directory_path)  
 Rather than be on the MeCab_Tagger object, this method is a global with no connection to the object we made earlier.  Therefore, it requires the dictionary directory path to function.  Yeah, I know.  I don't get it either.  
 This method only returns an array of the text pieces with no Mecab info.
 ```
-mecab_split('行きます', '/var/lib/mecab/dic/ipadic-utf8');
+$results = mecab_split('行きます', '/var/lib/mecab/dic/ipadic-utf8');
+
+print_r($results);
 ```   
 Will produce:
 ```
