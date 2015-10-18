@@ -247,6 +247,7 @@ Main class used to parse text.
   @param    int             output_length   Maximum length of output. (Optional)
 
   @return   string
+  ```
 
   - ##### parseNBestInit(string, length)  
   Initialize N-best enumeration with a sentence. 
