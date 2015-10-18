@@ -76,14 +76,13 @@ Main class used to parse text.
 
   - ##### split(string, dic_dir, user_dic, filter, persistent) [static]
   Split string into morphemes.
-  ###### Parameters  
-| Name          | Type          | Required  | Explanation                  |   
-| :------------ |:--------------| :---------| :----------------------------|   
-| string        | string        | required  | The string to split          |   
-| dic_dir       | string        | optional  | Path to dictionary directory |   
-| user_dic      | string        | optional  | Path to user dictionary      |   
-| filter        | callback      | optional  | Filter function or method    |   
-| persistent    | boolean       | optional  |                              |   
+  ```
+  @param    string          string          The string to split   
+  @param    string          dic_dir         Path to dictionary directory (optional)    
+  @param    string          user_dic        Path to user dictionary (optional)   
+  @param    callback        filter          Filter function or method (optional)      
+  @param    boolean         persistent      (optional)     
+  ```
 
   - ##### __construct(arg, persistent)
   Construct class instance.
