@@ -113,7 +113,7 @@ Main class used to parse text.
   Get current partial parsing mode state.  
   ```
   @return   boolean
-  '''
+  ```
 
   - ##### setPartial(bool)  
   Set partial parsing mode.  
