@@ -1,10 +1,10 @@
 # php-mecab Documentation   
-Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab).   
+Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab).
 
 ## Contents  
   - [Installation](#installation)
   - [Basic Usage](#basic-usage)
-  - [Classes](#classes)
+  - [Classes and Methods](#classes-and-methods)
     - [MeCab_Tagger](#mecab_tagger)
     - [MeCab_Node](#mecab_node)
 
@@ -48,7 +48,7 @@ Will produce:
 BOS/EOS,*,*,*,*,*,*,*,*動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ助動詞,*,*,*,特殊・マス,基本形,ます,マス,マスBOS/EOS,*,*,*,*,*,*,*,*
 ```  
 
-#### mecab_split(string, dictionary_directory_path)  
+#### split(string, dictionary_directory_path)  
 Rather than be on the MeCab_Tagger object, this method is a global with no connection to the object we made earlier.  Therefore, it requires the dictionary directory path to function.  Yeah, I know.  I don't get it either.  
 This method only returns an array of the text pieces with no Mecab info.
 ```
@@ -65,25 +65,31 @@ Array
 )
 ```
 
-## Classes   
+## Classes and Methods  
+Based off documentation found here: [http://mechsys.tec.u-ryukyu.ac.jp/~oshiro/php_mecab_apis.html](http://mechsys.tec.u-ryukyu.ac.jp/~oshiro/php_mecab_apis.html)
 
 ### MeCab_Tagger   
 Main class used to parse text.   
 #### Methods
-  - ##### __construct()
-  ###### Parameters  
-    Parameter #0 [ <optional> array or NULL $arg ]  
-    Parameter #1 [ <optional> $persistent ]
-
   - ##### version() [static]  
+  Return Mecab version.
 
-  - ##### split() [static]
+  - ##### split(string, dic_dir, user_dic, filter, persistent) [static]
+  Split string into morphemes.
   ###### Parameters
-    Parameter #0 [ <required> $str ]  
-    Parameter #1 [ <optional> $dicdir ]  
-    Parameter #2 [ <optional> $userdic ]  
-    Parameter #3 [ <optional> $filter ]  
-    Parameter #4 [ <optional> $persistent ]  
+    | Name          | Type          | Required  | Explanation                  |
+    | ------------- |:-------------:| ---------:| ----------------------------:|
+    | string        | string        | required  | The string to split          |
+    | dic_dir       | string        | optional  | Path to dictionary directory |
+    | user_dic      | string        | optional  | Path to user dictionary      |
+    | filter        | callback      | optional  | Filter function or method    |
+    | persistent    | boolean       | optional  |                              |
+
+  - ##### __construct(arg, persistent)
+  Construct class instance.
+  ###### Parameters (2)  
+    arg         array or NULL   [optional]   
+    persistent  boolean         [optional]
 
   - ##### getPartial()  
 
@@ -111,43 +117,43 @@ Main class used to parse text.
 
   - ##### parse()  
   ###### Parameters
-    Parameter #0 [ <required> $str ]
-    Parameter #1 [ <optional> $len ]
-    Parameter #2 [ <optional> $olen ]
+    Parameter #0 [ <required> $str ]  
+    Parameter #1 [ <optional> $len ]  
+    Parameter #2 [ <optional> $olen ]  
 
   - ##### parseToString()  
   ###### Parameters
-    Parameter #0 [ <required> $str ]
-    Parameter #1 [ <optional> $len ]
-    Parameter #2 [ <optional> $olen ]
+    Parameter #0 [ <required> $str ]  
+    Parameter #1 [ <optional> $len ]  
+    Parameter #2 [ <optional> $olen ]  
 
   - ##### parseToNode()  
   ###### Parameters  
-    Parameter #0 [ <required> $str ]
-    Parameter #1 [ <optional> $len ]
+    Parameter #0 [ <required> $str ]  
+    Parameter #1 [ <optional> $len ]  
 
 
   - ##### parseNBest()  
   ###### Parameters  
-    Parameter #0 [ <required> $n ]
-    Parameter #1 [ <required> $str ]
-    Parameter #2 [ <optional> $len ]
-    Parameter #3 [ <optional> $olen ]
+    Parameter #0 [ <required> $n ]  
+    Parameter #1 [ <required> $str ]  
+    Parameter #2 [ <optional> $len ]  
+    Parameter #3 [ <optional> $olen ]  
 
   - ##### parseNBestInit()  
   ###### Parameters  
-    Parameter #0 [ <required> $str ]
-    Parameter #1 [ <optional> $len ]
+    Parameter #0 [ <required> $str ]  
+    Parameter #1 [ <optional> $len ]  
 
   - ##### next()  
   ###### Parameters  
-    Parameter #0 [ <optional> $olen ]
+    Parameter #0 [ <optional> $olen ]  
 
   - ##### nextNode()  
 
   - ##### formatNode()  
   ###### Parameters  
-    Parameter #0 [ <required> MeCab_Node $node ]
+    Parameter #0 [ <required> MeCab_Node $node ]  
 
   - ##### dictionaryInfo()
 
