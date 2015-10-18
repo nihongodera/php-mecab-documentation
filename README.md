@@ -75,14 +75,31 @@ Main class used to parse text.
   Return Mecab version.
 
   - ##### split(string, dic_dir, user_dic, filter, persistent) [static]
-  Split string into morphemes.
+  Split string into array of morphemes.  Usually requires the dictionary directory to be passed as a parameter.
   ```
   @param    string          string          The string to split   
   @param    string          dic_dir         Path to dictionary directory (optional)    
   @param    string          user_dic        Path to user dictionary (optional)   
   @param    callback        filter          Filter function or method (optional)      
-  @param    boolean         persistent      (optional)     
+  @param    boolean         persistent      (optional)    
+
+  @return   array 
   ```
+  Example  
+  ```
+   $mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
+
+   $array = $mecab::split('行きます', '/var/lib/mecab/dic/ipadic-utf8');
+
+   print_r($array);
+
+   Array
+   (
+     [0] => 行き
+     [1] => ます
+   )   
+  ```
+
 
   - ##### __construct(arg, persistent)
   Construct class instance.
