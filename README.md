@@ -72,28 +72,84 @@ Main class used to parse text.
 #### Methods
   - ##### __construct()
   ###### Parameters  
-    Parameter #0 [ <optional> array or NULL $arg ]
+    Parameter #0 [ <optional> array or NULL $arg ]  
     Parameter #1 [ <optional> $persistent ]
 
-  - version()
-  - split()
-  - getPartial()
-  - setPartial()
-  - getTheta()
-  - setTheta()
-  - getLatticeLevel()
-  - setLatticeLevel()
-  - getAllMorphs()
-  - setAllMorphs()
-  - parse()
-  - parseToString()
-  - parseToNode()
-  - parseNBest()
-  - parseNBestInit()
-  - next()
-  - nextNode()
-  - formatNode()
-  - dictionaryInfo()
+  - ##### version() [static]  
+
+  - ##### split() [static]
+  ###### Parameters
+    Parameter #0 [ <required> $str ]  
+    Parameter #1 [ <optional> $dicdir ]  
+    Parameter #2 [ <optional> $userdic ]  
+    Parameter #3 [ <optional> $filter ]  
+    Parameter #4 [ <optional> $persistent ]  
+
+  - ##### getPartial()  
+
+  - ##### setPartial()  
+  ###### Parameters  
+    Parameter #0 [ <optional> $partial ]  
+
+  - ##### getTheta()  
+
+  - ##### setTheta()  
+  ###### Parameters
+    Parameter #0 [ <optional> $theta ]  
+
+  - ##### getLatticeLevel()  
+
+  - ##### setLatticeLevel()  
+  ###### Parameters  
+    Parameter #0 [ <optional> $level ]  
+
+  - ##### getAllMorphs()  
+
+  - ##### setAllMorphs()  
+  ###### Parameters
+    Parameter #0 [ <optional> $all_morphs ]  
+
+  - ##### parse()  
+  ###### Parameters
+    Parameter #0 [ <required> $str ]
+    Parameter #1 [ <optional> $len ]
+    Parameter #2 [ <optional> $olen ]
+
+  - ##### parseToString()  
+  ###### Parameters
+    Parameter #0 [ <required> $str ]
+    Parameter #1 [ <optional> $len ]
+    Parameter #2 [ <optional> $olen ]
+
+  - ##### parseToNode()  
+  ###### Parameters  
+    Parameter #0 [ <required> $str ]
+    Parameter #1 [ <optional> $len ]
+
+
+  - ##### parseNBest()  
+  ###### Parameters  
+    Parameter #0 [ <required> $n ]
+    Parameter #1 [ <required> $str ]
+    Parameter #2 [ <optional> $len ]
+    Parameter #3 [ <optional> $olen ]
+
+  - ##### parseNBestInit()  
+  ###### Parameters  
+    Parameter #0 [ <required> $str ]
+    Parameter #1 [ <optional> $len ]
+
+  - ##### next()  
+  ###### Parameters  
+    Parameter #0 [ <optional> $olen ]
+
+  - ##### nextNode()  
+
+  - ##### formatNode()  
+  ###### Parameters  
+    Parameter #0 [ <required> MeCab_Node $node ]
+
+  - ##### dictionaryInfo()
 
 ### Mecab_Node
 Returned by parseToNode method on Mecab_Tagger.
