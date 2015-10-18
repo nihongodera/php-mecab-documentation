@@ -7,6 +7,7 @@ Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab
   - [Classes and Methods](#classes-and-methods)
     - [MeCab_Tagger](#mecab_tagger)
     - [MeCab_Node](#mecab_node)
+  - [Other Resources](#other-resources)
 
 ## Installation   
 Coming...   
@@ -76,13 +77,13 @@ Main class used to parse text.
   - ##### split(string, dic_dir, user_dic, filter, persistent) [static]
   Split string into array of morphemes.  Usually requires the dictionary directory to be passed as a parameter.
   ```
-  @param    string          string          String to split.  
-  @param    string          dic_dir         Path to dictionary directory. (Optional)    
-  @param    string          user_dic        Path to user dictionary. (Optional)   
-  @param    callback        filter          Filter function or method. (Optional)      
-  @param    boolean         persistent      (Optional)    
-
-  @return   array 
+  * @param    string      string          String to split.  
+  * @param    string      dic_dir         Path to dictionary directory. (Optional)    
+  * @param    string      user_dic        Path to user dictionary. (Optional)   
+  * @param    callback    filter          Filter function or method. (Optional)      
+  * @param    boolean     persistent      (Optional)    
+  *
+  * @return   array 
   ```
   Example  
   ```
@@ -99,72 +100,71 @@ Main class used to parse text.
    )   
   ```
 
-
   - ##### __construct(arguments, persistent)
   Construct class instance.
   ```
-  @param    array           arguments       Command line arguments.        
-  @param    boolean         persistent      (Optional)    
-
-  @return   MeCab_Tagger 
+  * @param    array       arguments       Command line arguments.        
+  * @param    boolean     persistent      (Optional)    
+  *
+  * @return   MeCab_Tagger 
   ```
 
   - ##### getPartial()  
   Get current partial parsing mode state.  
   ```
-  @return   boolean
+  * @return   boolean
   ```
 
   - ##### setPartial(bool)  
   Set partial parsing mode.  
   ```
-  @param    boolean          bool           Partial parsing mode.
+  * @param    boolean     bool           Partial parsing mode.
   ```
 
   - ##### getTheta()  
   Get current temparature parameter theta.  
   ```
-  return    float
+  * @return    float
   ```
 
   - ##### setTheta(theta)  
   Set temparature parameter theta.
   ```
-  @param    float/int       theta           Temparature parameter theta.
+  * @param    float/int   theta           Temparature parameter theta.
   ```
 
   - ##### getLatticeLevel()  
   Get current lattice level.
   ```
-  @return   int
+  * @return   int
   ```
 
   - ##### setLatticeLevel(level)  
   Set lattice level.
   ```
-  @param    int             level           Lattice level.
+  * @param    int         level           Lattice level.
   ```
 
   - ##### getAllMorphs()  
   Get all-morphs output mode.
   ```
-  @return   bool
+  * @return   bool
   ```
 
   - ##### setAllMorphs(bool)  
   Set all-morphs output mode.
   ```
-  @param    bool            bool            All-morphs output mode.
+  * @param    bool        bool            All-morphs output mode.
   ```
 
   - ##### parse(string, length, output_length)  
   Parse string and output results as string.
   ```
-  @param    string          string          String to be parsed.
-  @param    int             length          Length to be analyzed. (Optional)  
-  @param    int             output_length   Maximum length of output. (Optional)
-
-  @return   string
+  * @param    string      string          String to be parsed.
+  * @param    int         length          Length to be analyzed. (Optional)  
+  * @param    int         output_length   Maximum length of output. (Optional)
+  *
+  * @return   string
   ```
   Example
   ```
@@ -182,11 +182,11 @@ Main class used to parse text.
   - ##### parseToString(string, length, output_length)  
   Parse string and output results as string.
   ```
-  @param    string          string          String to be parsed.
-  @param    int             length          Length to be analyzed. (Optional)  
-  @param    int             output_length   Maximum length of output. (Optional)
-
-  @return   string
+  * @param    string      string          String to be parsed.
+  * @param    int         length          Length to be analyzed. (Optional)  
+  * @param    int         output_length   Maximum length of output. (Optional)
+  *
+  * @return   string
   ```
   Example
   ```
@@ -204,10 +204,10 @@ Main class used to parse text.
   - ##### parseToNode(string, length)  
   Parse string and output results as MeCab_Node.
   ```
-  @param    string          string          String to be parsed.
-  @param    int             length          Length to be analyzed. (Optional)
-
-  @return   MeCab_Node
+  * @param    string      string          String to be parsed.
+  * @param    int         length          Length to be analyzed. (Optional)
+  *
+  * @return   MeCab_Node
   ```
   Example
   ```
@@ -241,80 +241,134 @@ Main class used to parse text.
   - ##### parseNBest(n, string, length, output_length)  
   Parse given sentence and output N-best results as string.  This method causes seg faults for me.
   ```
-  @param    int             n               Number of results to obtain.
-  @param    string          string          String to be parsed.
-  @param    int             length          Length to be analyzed. (Optional)
-  @param    int             output_length   Maximum length of output. (Optional)
-
-  @return   string
+  * @param    int         n               Number of results to obtain.
+  * @param    string      string          String to be parsed.
+  * @param    int         length          Length to be analyzed. (Optional)
+  * @param    int         output_length   Maximum length of output. (Optional)
+  *
+  * @return   string
   ```
 
   - ##### parseNBestInit(string, length)  
   Initialize N-best enumeration with a sentence. 
   ```
-  @param    string          string          String to be parsed.
-  @param    int             length          Length to be analyzed. (Optional)
+  * @param    string      string          String to be parsed.
+  * @param    int         length          Length to be analyzed. (Optional)
 
-  @return   boolean
+  * @return   boolean
   ```
 
   - ##### next(output_length)  
   Get the next result of N-Best as a string.
   ```
-  @param    int             output_length   Maximum length of output. (Optional)
-
-  @return   string
+  * @param    int         output_length   Maximum length of output. (Optional)
+  *
+  * @return   string
   ```
 
   - ##### nextNode()  
   Get the next result of N-Best as a node.
   ```
-  @return   MeCab_Node
+  * @return   MeCab_Node
   ```
 
   - ##### formatNode(node)  
   Format a node to a string.
   ```
-  @param    MeCab_Node      node            Node to be formatted.
-
-  @return   string
+  * @param    MeCab_Node  node            Node to be formatted.
+  *
+  * @return   string
   ```
 
   - ##### dictionaryInfo()
   Return array of dictionary info.
   ```
-  @return   array
+  * @return   array
   ```
 
 ### Mecab_Node
 Returned by parseToNode method on Mecab_Tagger.
 #### Methods
-  - __get()
-  - __isset()
-  - getIterator()
-  - setTraverse()
-  - toArray()
-  - toString()
-  - __toString()
-  - getPrev()
-  - getNext()
-  - getENext()
-  - getBNext()
-  - getRPath()
-  - getLPath()
-  - getSurface()
-  - getFeature()
-  - getId()
-  - getLength()
-  - getRLength()
-  - getRcAttr()
-  - getLcAttr()
-  - getPosId()
-  - getCharType()
-  - getStat()
-  - isBest()
-  - getAlpha()
-  - getBeta()
-  - getWCost()
-  - getCost()
+  - ##### getIterator()
+  Return MeCab_NodeIterator.
+  ```
+  * @return MeCab_NodeIterator
+  ```
 
+  - ##### setTraverse(mode)
+  Set the traverse mode.
+  ```
+  * @param    long        mode            Traverse mode.
+  ```
+
+  - ##### getPrev()
+
+  - ##### getNext()
+
+  - ##### getENext()
+
+  - ##### getBNext()
+
+  - ##### getRPath()
+
+  - ##### getLPath()
+
+  - ##### getSurface()
+
+  - ##### getFeature()
+
+  - ##### getId()
+
+  - ##### getLength()
+
+  - ##### getRLength()
+
+  - ##### getRcAttr()
+
+  - ##### getLcAttr()
+
+  - ##### getPosId()
+
+  - ##### getCharType()
+
+  - ##### getStat()
+
+  - ##### getAlpha()
+
+  - ##### getBeta()
+
+  - ##### getWCost()
+
+  - ##### getCost()
+
+  - ##### isBest()
+
+  - ##### toArray()
+
+  - ##### toString()
+
+## MeCab_NodeIterator
+Node iterator class.
+#### Methods
+  - ##### current()
+
+  - ##### key()
+
+  - ##### next()
+
+  - ##### rewind()
+
+  - ##### valid()
+
+## Other Resources
+The University of the Ryukyus Department of Mechanical Systems Engineering maintains a php-mecab API documentation page that can be useful.   
+[http://mechsys.tec.u-ryukyu.ac.jp/~oshiro/php_mecab_apis.html](http://mechsys.tec.u-ryukyu.ac.jp/~oshiro/php_mecab_apis.html)    
+  
+The MeCab documentation is here on github, but its in Japanese only. 
+[http://taku910.github.io/mecab/](http://taku910.github.io/mecab/)
+  
+The MeCab api documentation is up on googlecode.  
+[https://mecab.googlecode.com/svn/trunk/mecab/doc/doxygen/index.html](https://mecab.googlecode.com/svn/trunk/mecab/doc/doxygen/index.html)
+  
+If you're using an IDE, fumikito has a gist that can help with php-mecab class recognition.  
+[https://gist.github.com/fumikito/bb172b4cf5648c7f8451](https://gist.github.com/fumikito/bb172b4cf5648c7f8451)
