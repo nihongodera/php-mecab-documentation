@@ -18,7 +18,127 @@ Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab
   - [Other Resources](#other-resources)
 
 ## Installation   
-Coming...   
+(Please note that I am a Linux user and have only tested the Linux installation guide.  The Mac and Windows installation guides have been pieced together from other sources.)  
+
+### Install MeCab
+Before installing php-mecab, you must install MeCab.
+
+#### Linux
+Linux users can more than likely find MeCab in their distro repositories.  Simply install 'mecab' and the package 'mecab-ipadic-utf8'.  Ubuntu users can do this with the following command.
+```cmd
+sudo apt-get install mecab mecab-ipadic-utf8
+```
+
+If that doesn't work, you can download the source and build it yourself.  Note that this will require the package 'build-essential'.  
+First pull in MeCab.
+```cmd
+wget https://mecab.googlecode.com/files/mecab-0.996.tar.gz
+tar zxfv mecab-0.996.tar.gz
+cd mecab-0.996
+./configure --with-charset=utf8 --enable-utf8-only
+```
+Then get the dictionary file.
+```cmd
+wget https://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+tar zxfv mecab-ipadic-2.7.0-20070801.tar.gz
+cd mecab-ipadic-2.7.0-20070801
+./configure --with-charset=utf8
+```
+
+#### Mac OS X
+Both MeCab and the required dictionary (mecab-ipadic-utf8) are in MacPorts.  If that doesn't work, try downloading the source and building it yourself.  You can get the source and the dictionary by using curl to get the packages from the following urls:  
+https://mecab.googlecode.com/files/mecab-0.996.tar.gz  
+https://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
+
+I believe you can build these files with Xcode.  Somebody correct me if I'm wrong.
+
+#### Windows
+Download the installer from this url: https://mecab.googlecode.com/files/mecab-0.996.exe
+
+### Install php-mecab
+First, verify that you have MeCab on your computer by testing it in the command line.  Type `mecab` and if you don't get an error, things are looking good.  If you get an error that looks something like this 'param.cpp(69) [ifs] no such file or directory: /usr/local/lib/mecab/dic/ipadic/dicrc' you need to find your dictionary file and pass it as a parameter.  The directory is called 'ipadic-utf8' and needs to contain a file called 'unk.dic'.
+```cmd
+mecab --dicdir=/path/to/dictionary/dic/ipadic/
+```
+Next, type some Japanese and make sure you get an appropriate response.
+```cmd
+~$ mecab
+やった！
+やっ    動詞,自立,*,*,五段・ラ行,連用タ接続,やる,ヤッ,ヤッ
+た      助動詞,*,*,*,特殊・タ,基本形,た,タ,タ
+！      記号,一般,*,*,*,*,！,！,！
+EOS
+```
+
+#### Linux
+Install the following dependencies:  
+php5-dev  
+libmecab-dev  
+build-essential  
+```cmd
+sudo apt-get install php5-dev libmecab-dev build-essential
+```  
+
+Download the php-mecab source.
+```cmd
+wget https://github.com/rsky/php-mecab/archive/master.zip
+```
+
+You will need to find the package 'mecab-config'.  Let's use 'locate' because its easy.
+```cmd
+sudo updatedb
+locate mecab-config
+```
+That should give you a path that looks something like /usr/bin/mecab-config.  
+We should now be ready to build our package.  Put your mecab-config path after the --with-mecab-config option.  
+```cmd
+unzip master.zip
+cd php-mecab-master/mecab
+phpize
+sudo ./configure --with-php-config=/usr/bin/php-config --with-mecab-config=/path/to/mecab-config
+sudo make
+sudo make install
+```
+
+After completing this step, you should have a mecab.so file in /usr/lib/php5/20121212.  Let's check.
+```cmd
+cd /usr/lib/php5/20121212
+ls
+```
+
+We now need to enable the mod.  Move to /etc/php5/mods-available/
+```cmd
+cd /etc/php5/mods-available/
+```
+Next, create a new .ini file for mecab.
+```cmd
+sudo touch mecab.ini
+echo "extension=mecab.so" | sudo tee -a mecab.ini
+```
+And then we need to activate the module.
+```cmd
+sudo php5enmod mecab
+```
+Oce this is done, you simply need to restart your web server.  
+For Apache:
+```cmd
+sudo service apache2 restart
+```
+And for nginx:
+```cmd
+sudo service nginx restart
+```
+
+You should be ready to go. 
+
+#### Mac OS X
+
+#### Windows
+
+
+
+
+  
 
 [Top](#contents)
 
@@ -30,23 +150,27 @@ php-mecab can be used functionally or as an object.  I prefer the OOP approach, 
   - [Using Nodes](#using-nodes)
 
 ### Initialization
-MeCab usually requires a dictionary directory to be passed to it on initialization.  The location of the directory seems to vary by system, so find 'ipadic-utf8' on your system and pass the full folder path.  Often, there will be more than one 'ipadic-utf8' folders on a system.  Make sure the one you use contains a file called 'unk.dic'.  Without this, mecab will fail to initialize.  Pass the the dictionary directory to MeCab with the console flag '-d' in an array.   
+MeCab sometimes requires a dictionary directory to be passed to it on initialization.  The location of the directory seems to vary by system, so find 'ipadic-utf8' on your system and pass the full folder path.  Often, there will be more than one 'ipadic-utf8' folders on a system.  Make sure the one you use contains a file called 'unk.dic'.  Without this, mecab will fail to initialize.  Pass the the dictionary directory to MeCab with the console flag '-d' in an array.   
    
 The options passed to MeCab are the same as the options used in the command line program.  Check the man page for MeCab for all available options.   
 
 #### Object Orientated
-New up a [MeCab_Tagger](#__constructarguments-persistent) object, passing the array containing the command line flag '-d' and a dictionary folder path to it as a parameter.   
+New up a [MeCab_Tagger](#__constructarguments-persistent) object.
+```php
+$mecab = new \MeCab_Tagger();   
+```
+If it does't work, or you get an error, try passing the array containing the command line flag '-d' and a dictionary folder path to it as a parameter.   
 ```php
 $mecab = new \MeCab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);   
 ```   
 The variable $mecab will be a [MeCab_Tagger](#mecab_tagger) object.  
 
 #### Functional
-Use the function [mecab_new()](#mecab_newarguments-persistent) to get a mecab resource.
+Use the function [mecab_new()](#mecab_newarguments-persistent) to get a mecab resource.  As with the Object Orientated approach, you may or may not have to pass it a dictionary directory.
 ```php
 $mecab = mecab_new(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
 ```  
-The $mecab variable will be a resources of type 'mecab'.
+The $mecab variable will be a resource of type 'mecab'.
 
 [Top](#contents)
 
@@ -1520,6 +1644,9 @@ The University of the Ryukyus Department of Mechanical Systems Engineering maint
   
 The MeCab documentation is here on github, but its in Japanese only.   
 [http://taku910.github.io/mecab/](http://taku910.github.io/mecab/)    
+
+jordwest has translated parts of it into English here.   
+[https://github.com/jordwest/mecab-docs-en](https://github.com/jordwest/mecab-docs-en)
   
 The MeCab api documentation is up on googlecode.  
 [https://mecab.googlecode.com/svn/trunk/mecab/doc/doxygen/index.html](https://mecab.googlecode.com/svn/trunk/mecab/doc/doxygen/index.html)
