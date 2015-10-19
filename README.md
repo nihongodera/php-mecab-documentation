@@ -107,18 +107,34 @@ Main class used to parse text.
   - [setPartial()](#setpartialbool)
   - [getTheta()](#gettheta)
   - [setTheta()](#setthetatheta)
+  - [getLatticeLevel()](#getlatticelevel)
+  - [setLatticeLevel()](#setlatticelevellevel)
+  - [getAllMorphs()](#getallmorphs)
+  - [setAllMorphs()](#setallmorphsbool)
+  - [parse()](#parsestring-length-output_length)
+  - [parseToString()](#parsetostringstring-length-output_length)
+  - [parseToNode()](#parsetonodestring-length)
+  - [parseNBest()](#parsenbestn-string-length-output_length)
+  - [parseNBestInit()](#parsenbestinitstring-length)
+  - [next()](#nextoutput_length)
+  - [nextNode()](#nextnode)
+  - [formatNode()](#formatnodenode)
+  - [dictionaryInfo()](#dictionaryinfo)
 
 ###### version() [static]  
 Return Mecab version.
+```php
+* @return   string
+```
 
-###### split(string, dic_dir, user_dic, filter, persistent) [static]
+###### split($string, $dic_dir, $user_dic, $filter, $persistent) [static]
 Split string into array of morphemes.  Usually requires the dictionary directory to be passed as a parameter.
 ```
-* @param    string        string          String to split.  
-* @param    string        dic_dir         Path to dictionary directory. (Optional)    
-* @param    string        user_dic        Path to user dictionary. (Optional)   
-* @param    callback      filter          Filter function or method. (Optional)      
-* @param    boolean       persistent      (Optional)    
+* @param    string        $string         String to split.  
+* @param    string        $dic_dir        Path to dictionary directory. (Optional)    
+* @param    string        $user_dic       Path to user dictionary. (Optional)   
+* @param    callback      $filter         Filter function or method. (Optional)      
+* @param    boolean       $persistent     (Optional)    
 *
 * @return   array 
 ```
@@ -137,11 +153,11 @@ Array
 )   
 ```
 
-###### __construct(arguments, persistent)
+###### __construct($arguments, $persistent)
 Construct class instance.
 ```
-* @param    array         arguments       Command line arguments.        
-* @param    boolean       persistent      (Optional)    
+* @param    array         $arguments      Command line arguments.        
+* @param    boolean       $persistent     (Optional)    
 *
 * @return     MeCab_Tagger 
 ```
@@ -152,10 +168,10 @@ Get current partial parsing mode state.
 * @return     boolean
 ```
 
-###### setPartial(bool)  
+###### setPartial($bool)  
 Set partial parsing mode.  
 ```
-* @param      boolean     bool            Partial parsing mode.
+* @param      boolean     $bool           Partial parsing mode.
 ```
 
 ###### getTheta()  
@@ -164,10 +180,10 @@ Get current temparature parameter theta.
 * @return     float
 ```
 
-###### setTheta(theta)  
+###### setTheta($theta)  
 Set temparature parameter theta.
 ```
-* @param      float/int   theta           Temparature parameter theta.
+* @param      float/int   $theta          Temparature parameter theta.
 ```
 
 ###### getLatticeLevel()  
@@ -176,10 +192,10 @@ Get current lattice level.
 * @return     int
 ```
 
-###### setLatticeLevel(level)  
+###### setLatticeLevel($level)  
 Set lattice level.
 ```
-* @param      int         level           Lattice level.
+* @param      int         $level          Lattice level.
 ```
 
 ###### getAllMorphs()  
@@ -188,18 +204,18 @@ Get all-morphs output mode.
 * @return     bool
 ```
 
-###### setAllMorphs(bool)  
+###### setAllMorphs($bool)  
 Set all-morphs output mode.
 ```
-* @param      bool        bool            All-morphs output mode.
+* @param      bool        $bool           All-morphs output mode.
 ```
 
-###### parse(string, length, output_length)  
+###### parse($string, $length, $output_length)  
 Parse string and output results as string.
 ```
-* @param      string      string          String to be parsed.
-* @param      int         length          Length to be analyzed. (Optional)  
-* @param      int         output_length   Maximum length of output. (Optional)
+* @param      string      $string         String to be parsed.
+* @param      int         $length         Length to be analyzed. (Optional)  
+* @param      int         $output_length  Maximum length of output. (Optional)
 *
 * @return     string
 ```
@@ -216,12 +232,12 @@ print_r($string);
 EOS
 ```
 
-###### parseToString(string, length, output_length)  
+###### parseToString($string, $length, $output_length)  
 Parse string and output results as string.
 ```
-* @param      string      string          String to be parsed.
-* @param      int         length          Length to be analyzed. (Optional)  
-* @param      int         output_length   Maximum length of output. (Optional)
+* @param      string      $string         String to be parsed.
+* @param      int         $length         Length to be analyzed. (Optional)  
+* @param      int         $output_length  Maximum length of output. (Optional)
 *
 * @return     string
 ```
@@ -238,11 +254,11 @@ print_r($string);
 EOS
 ```
 
-###### parseToNode(string, length)  
+###### parseToNode($string, $length)  
 Parse string and output results as MeCab_Node.
 ```
-* @param      string      string          String to be parsed.
-* @param      int         length          Length to be analyzed. (Optional)
+* @param      string      $string         String to be parsed.
+* @param      int         $length         Length to be analyzed. (Optional)
 *
 * @return     MeCab_Node
 ```
@@ -275,30 +291,30 @@ Array
 )
 ```
 
-###### parseNBest(n, string, length, output_length)  
+###### parseNBest($n, $string, $length, $output_length)  
 Parse given sentence and output N-best results as string.  This method causes seg faults for me.
 ```
-* @param      int         n               Number of results to obtain.
-* @param      string      string          String to be parsed.
-* @param      int         length          Length to be analyzed. (Optional)
-* @param      int         output_length   Maximum length of output. (Optional)
+* @param      int         $n              Number of results to obtain.
+* @param      string      $string         String to be parsed.
+* @param      int         $length         Length to be analyzed. (Optional)
+* @param      int         $output_length  Maximum length of output. (Optional)
 *
 * @return     string
 ```
 
-###### parseNBestInit(string, length)  
+###### parseNBestInit($string, $length)  
 Initialize N-best enumeration with a sentence. 
 ```
-* @param      string      string          String to be parsed.
-* @param      int         length          Length to be analyzed. (Optional)
+* @param      string      $string         String to be parsed.
+* @param      int         $length         Length to be analyzed. (Optional)
 
 * @return     boolean
 ```
 
-###### next(output_length)  
+###### next($output_length)  
 Get the next result of N-Best as a string.
 ```
-* @param      int         output_length   Maximum length of output. (Optional)
+* @param      int         $output_length  Maximum length of output. (Optional)
 *
 * @return     string
 ```
@@ -309,10 +325,10 @@ Get the next result of N-Best as a node.
 * @return     MeCab_Node
 ```
 
-###### formatNode(node)  
+###### formatNode($node)  
 Format a node to a string.
 ```
-* @param      MeCab_Node  node            Node to be formatted.
+* @param      MeCab_Node  $node           Node to be formatted.
 *
 * @return     string
 ```
@@ -326,16 +342,43 @@ Return array of dictionary info.
 #### Mecab_Node
 Returned by parseToNode method on Mecab_Tagger.
 ##### Methods
+  - [getIterator()](#getiterator)
+  - [setTraverse()](#settraversemode)
+  - [getPrev()](#getprev)
+  - [getNext()](#getnext)
+  - [getENext()](#getenext)
+  - [getBNext()](#getbnext)
+  - [getRPath()](#getrpath)
+  - [getLPath()](#getlpath)
+  - [getSurface()](#getsurface)
+  - [getFeature()](#getfeature)
+  - [getId()](#getid)
+  - [getLength()](#getlength)
+  - [getRLength()](#getrlength)
+  - [getRcAttr()](#getrcattr)
+  - [getLcAttr()](#getlcattr)
+  - [getPosId()](#getposid)
+  - [getCharType()](#getchartype)
+  - [getStat()](#getstat)
+  - [getAlpha()](#getalpha)
+  - [getBeta()](#getbeta)
+  - [getWCost()](#getwcost)
+  - [getCost()](#getcost)
+  - [getProb()](#getprob)
+  - [isBest()](#isbest)
+  - [toArray()](#toarraydump_all)
+  - [toString()](#tostring)
+
 ###### getIterator()
 Return MeCab_NodeIterator.
 ```
 * @return     MeCab_NodeIterator
 ```
 
-###### setTraverse(mode)
+###### setTraverse($mode)
 Set the traverse mode.
 ```
-* @param      long        mode            Traverse mode.
+* @param      long        $mode           Traverse mode.
 ```
 
 ###### getPrev()
@@ -474,10 +517,10 @@ Determine whether the node is the best solution.
 * @return     boolean
 ```
 
-###### toArray(dump_all)
+###### toArray($dump_all)
 Get all elements of the node as an associative array.
 ```
-* @param      boolean     dump_all        Dump all related nodes if true. (Optional)
+* @param      boolean     $dump_all       Dump all related nodes if true. (Optional)
 
 * @return     array
 ```
@@ -491,6 +534,13 @@ Get the formatted string of the node.
 #### MeCab_Path
 Returned by getRPath and getLPath methods on MeCab_Node class.
 ##### Methods
+ - [getRNext()](#getrnext)
+ - [getLNext()](#getlnext)
+ - [getRNode()](#getrnode)
+ - [getLNode()](#getlnode)
+ - [getProb()](#getprob-1)
+ - [getCost()](#getcost-1)
+
 ###### getRNext()
 Get the rnext path. Return NULL if none.
 ```
@@ -530,6 +580,12 @@ Get the cumulative cost of the path.
 #### MeCab_NodeIterator
 Node iterator class.
 ##### Methods
+  - [current()](#current)
+  - [key()](#key)
+  - [next()](#next)
+  - [rewind()](#rewind)
+  - [valid()](#valid)
+
 ###### current()
 Return the current element.
 ```
@@ -554,6 +610,16 @@ Check if there is a current element after calls to rewind() or next().
 ```
 
 ### Functions
+  - [mecab_version()](#mecab_version)
+
+###### mecab_version()
+Return Mecab version.
+Return Mecab version.
+```
+* @return   string
+```
+
+###### 
 
 [Top](#contents)
 
