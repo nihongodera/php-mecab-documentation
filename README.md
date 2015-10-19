@@ -5,20 +5,24 @@ Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab
   - [Installation](#installation)
   - [Usage](#usage)
     - [Initialization](#initialization)
-  - [Classes and Methods](#classes-and-methods)
-    - [MeCab_Tagger](#mecab_tagger)
-    - [MeCab_Node](#mecab_node)
-    - [Mecab_Path](#mecab_path)
-    - [MeCab_NodeIterator](#mecab_nodeiterator)
+  - [Classes and Functions](#classes-and-functions)
+    - [Classes](#classes)
+      - [MeCab_Tagger](#mecab_tagger)
+      - [MeCab_Node](#mecab_node)
+      - [Mecab_Path](#mecab_path)
+      - [MeCab_NodeIterator](#mecab_nodeiterator)
+    - [Functions](#functions)
   - [Other Resources](#other-resources)
 
 ## Installation   
 Coming...   
 
+[Top](#contents)
+
 ## Usage   
 php-mecab can be used functionally or as an object.  I prefer the OOP approach, but I will try to cover both approaches in this guide.
 
-#### Initialization
+### Initialization
 Once installed, you can new up a MeCab_Tagger object, passing an array containing a command line flag and a dictionary folder path to it as a parameter.   
 ```
 $mecab = new \MeCab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);   
@@ -33,7 +37,9 @@ $mecab = mecab_new(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
 ```  
 In this case, $mecab will be a resources of type 'mecab'.
 
-#### Parsing
+[Top](#contents)
+
+### Parsing
 
 Once you have a MeCab_Tagger instance, you can start parsing.  Three methods are useful for basic parsing.    
 
@@ -82,15 +88,30 @@ Array
 )
 ```
 
-## Classes and Methods  
+[Top](#contents)
 
-### MeCab_Tagger   
+## Classes and Functions  
+### Classes
+  - [MeCab_Tagger](#mecab_tagger)
+  - [MeCab_Node](#mecab_node)
+  - [Mecab_Path](#mecab_path)
+  - [MeCab_NodeIterator](#mecab_nodeiterator)
+
+#### MeCab_Tagger   
 Main class used to parse text.   
-#### Methods
-  - ##### version() [static]  
+##### Methods
+  - [version()](#version-static)
+  - [split()](#splitstring-dic_dir-user_dic-filter-persistent-static)
+  - [__construct()](#__constructarguments-persistent)
+  - [getPartial()](#getpartial)
+  - [setPartial()](#setpartialbool)
+  - [getTheta()](#gettheta)
+  - [setTheta()](#setthetatheta)
+
+  - ###### version() [static]  
   Return Mecab version.
 
-  - ##### split(string, dic_dir, user_dic, filter, persistent) [static]
+  - ###### split(string, dic_dir, user_dic, filter, persistent) [static]
   Split string into array of morphemes.  Usually requires the dictionary directory to be passed as a parameter.
   ```
   * @param    string        string          String to split.  
@@ -116,7 +137,7 @@ Main class used to parse text.
    )   
   ```
 
-  - ##### __construct(arguments, persistent)
+  - ###### __construct(arguments, persistent)
   Construct class instance.
   ```
   * @param    array         arguments       Command line arguments.        
@@ -125,55 +146,55 @@ Main class used to parse text.
   * @return     MeCab_Tagger 
   ```
 
-  - ##### getPartial()  
+  - ###### getPartial()  
   Get current partial parsing mode state.  
   ```
   * @return     boolean
   ```
 
-  - ##### setPartial(bool)  
+  - ###### setPartial(bool)  
   Set partial parsing mode.  
   ```
   * @param      boolean     bool            Partial parsing mode.
   ```
 
-  - ##### getTheta()  
+  - ###### getTheta()  
   Get current temparature parameter theta.  
   ```
   * @return     float
   ```
 
-  - ##### setTheta(theta)  
+  - ###### setTheta(theta)  
   Set temparature parameter theta.
   ```
   * @param      float/int   theta           Temparature parameter theta.
   ```
 
-  - ##### getLatticeLevel()  
+  - ###### getLatticeLevel()  
   Get current lattice level.
   ```
   * @return     int
   ```
 
-  - ##### setLatticeLevel(level)  
+  - ###### setLatticeLevel(level)  
   Set lattice level.
   ```
   * @param      int         level           Lattice level.
   ```
 
-  - ##### getAllMorphs()  
+  - ###### getAllMorphs()  
   Get all-morphs output mode.
   ```
   * @return     bool
   ```
 
-  - ##### setAllMorphs(bool)  
+  - ###### setAllMorphs(bool)  
   Set all-morphs output mode.
   ```
   * @param      bool        bool            All-morphs output mode.
   ```
 
-  - ##### parse(string, length, output_length)  
+  - ###### parse(string, length, output_length)  
   Parse string and output results as string.
   ```
   * @param      string      string          String to be parsed.
@@ -195,7 +216,7 @@ Main class used to parse text.
   EOS
   ```
 
-  - ##### parseToString(string, length, output_length)  
+  - ###### parseToString(string, length, output_length)  
   Parse string and output results as string.
   ```
   * @param      string      string          String to be parsed.
@@ -217,7 +238,7 @@ Main class used to parse text.
   EOS
   ```
 
-  - ##### parseToNode(string, length)  
+  - ###### parseToNode(string, length)  
   Parse string and output results as MeCab_Node.
   ```
   * @param      string      string          String to be parsed.
@@ -254,7 +275,7 @@ Main class used to parse text.
   )
   ```
 
-  - ##### parseNBest(n, string, length, output_length)  
+  - ###### parseNBest(n, string, length, output_length)  
   Parse given sentence and output N-best results as string.  This method causes seg faults for me.
   ```
   * @param      int         n               Number of results to obtain.
@@ -265,7 +286,7 @@ Main class used to parse text.
   * @return     string
   ```
 
-  - ##### parseNBestInit(string, length)  
+  - ###### parseNBestInit(string, length)  
   Initialize N-best enumeration with a sentence. 
   ```
   * @param      string      string          String to be parsed.
@@ -274,7 +295,7 @@ Main class used to parse text.
   * @return     boolean
   ```
 
-  - ##### next(output_length)  
+  - ###### next(output_length)  
   Get the next result of N-Best as a string.
   ```
   * @param      int         output_length   Maximum length of output. (Optional)
@@ -282,13 +303,13 @@ Main class used to parse text.
   * @return     string
   ```
 
-  - ##### nextNode()  
+  - ###### nextNode()  
   Get the next result of N-Best as a node.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### formatNode(node)  
+  - ###### formatNode(node)  
   Format a node to a string.
   ```
   * @param      MeCab_Node  node            Node to be formatted.
@@ -296,118 +317,118 @@ Main class used to parse text.
   * @return     string
   ```
 
-  - ##### dictionaryInfo()
+  - ###### dictionaryInfo()
   Return array of dictionary info.
   ```
   * @return     array
   ```
 
-### Mecab_Node
+#### Mecab_Node
 Returned by parseToNode method on Mecab_Tagger.
-#### Methods
-  - ##### getIterator()
+##### Methods
+  - ###### getIterator()
   Return MeCab_NodeIterator.
   ```
   * @return     MeCab_NodeIterator
   ```
 
-  - ##### setTraverse(mode)
+  - ###### setTraverse(mode)
   Set the traverse mode.
   ```
   * @param      long        mode            Traverse mode.
   ```
 
-  - ##### getPrev()
+  - ###### getPrev()
   Get the previous node.  Return NULL if none.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### getNext()
+  - ###### getNext()
   Get the next node.  Return NULL if none.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### getENext()
+  - ###### getENext()
   Get the next node which has same end point as the given node.  Return NULL if none.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### getBNext()
+  - ###### getBNext()
   Get the next node which has same beginning point as the given node.  Return NULL if none.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### getRPath()
+  - ###### getRPath()
   Get the next node which has same end point as the given node.  Return NULL if none.
   ```
   * @return     MeCab_Path
   ```
 
-  - ##### getLPath()
+  - ###### getLPath()
   Get the next node which has same beginning point as the given node.  Return NULL if none.
   ```
   * @return     MeCab_Path
   ```
 
-  - ##### getSurface()
+  - ###### getSurface()
   Get the surface of the node.
   ```
   * @return     string
   ```
 
-  - ##### getFeature()  
+  - ###### getFeature()  
   Get the feature of the node.
   ```
   * @return     string
   ```
 
-  - ##### getId()  
+  - ###### getId()  
   Get the ID of the node.
   ```
   * @return     int
   ```
 
-  - ##### getLength()
+  - ###### getLength()
   Get the length of the node's surface.
   ```
   * @return     int
   ```
 
-  - ##### getRLength()  
+  - ###### getRLength()  
   Get the length of the node's surface including it's leading whitespace.
   ```
   * @return     int
   ```
 
-  - ##### getRcAttr()
+  - ###### getRcAttr()
   Get the ID of the right context.
   ```
   * @return     int
   ```
 
-  - ##### getLcAttr()
+  - ###### getLcAttr()
   Get the ID of the left context.
   ```
   * @return     int
   ```
 
-  - ##### getPosId()
+  - ###### getPosId()
   Get the ID of the part of speech.
   ```
   * @return     int
   ```
 
-  - ##### getCharType()
+  - ###### getCharType()
   Get the type of character.
   ```
   * @return     int
   ```
 
-  - ##### getStat()
+  - ###### getStat()
   Get the status of the node.
   ```
   * @return     int
@@ -417,43 +438,43 @@ Returned by parseToNode method on Mecab_Tagger.
   2: Beginning of Sentence, MECAB_BOS_NODE  
   3: End of Sentence, MECAB_EOS_NODE  
 
-  - ##### getAlpha()
+  - ###### getAlpha()
   Get the forward log probability.
   ```
   * @return     float
   ```
 
-  - ##### getBeta()
+  - ###### getBeta()
   Get the backward probability log.
   ```
   * @return     float
   ```
 
-  - ##### getWCost()
+  - ###### getWCost()
   Get the word arising cost.
   ```
   * @return     int
   ```
 
-  - ##### getCost()
+  - ###### getCost()
   Get the cumulative cost of the node. 
   ```
   * @return     int
   ```
 
-  - ##### getProb()
+  - ###### getProb()
   Get the marginal probability of the node.
   ```
   * @return     float
   ```
 
-  - ##### isBest()
+  - ###### isBest()
   Determine whether the node is the best solution.
   ```
   * @return     boolean
   ```
 
-  - ##### toArray(dump_all)
+  - ###### toArray(dump_all)
   Get all elements of the node as an associative array.
   ```
   * @param      boolean     dump_all        Dump all related nodes if true. (Optional)
@@ -461,76 +482,80 @@ Returned by parseToNode method on Mecab_Tagger.
   * @return     array
   ```
 
-  - ##### toString()
+  - ###### toString()
   Get the formatted string of the node.
   ```
   * @return     string
   ```
 
-### MeCab_Path
+#### MeCab_Path
 Returned by getRPath and getLPath methods on MeCab_Node class.
-#### Methods
-  - ##### getRNext()
+##### Methods
+  - ###### getRNext()
   Get the rnext path. Return NULL if none.
   ```
   * @return     MeCab_Path
   ```
 
-  - ##### getLNext()
+  - ###### getLNext()
   Get the lext path. Return NULL if none.
   ```
   * @return     MeCab_Path
   ```
 
-  - ##### getRNode()
+  - ###### getRNode()
   Get the rnode. Return NULL if none.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### getLNode()
+  - ###### getLNode()
   Get the lnode. Return NULL if none.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### getProb()
+  - ###### getProb()
   Get the marginal probability of the path.
   ```
   * @return     float
   ```
 
-  - ##### getCost()
+  - ###### getCost()
   Get the cumulative cost of the path. 
   ```
   * @return     int
   ```
 
-### MeCab_NodeIterator
+#### MeCab_NodeIterator
 Node iterator class.
-#### Methods
-  - ##### current()
+##### Methods
+  - ###### current()
   Return the current element.
   ```
   * @return     MeCab_Node
   ```
 
-  - ##### key()
+  - ###### key()
   ```
   * @return     int
   ```
 
-  - ##### next()
+  - ###### next()
   Set pointer to next element.
 
-  - ##### rewind()
+  - ###### rewind()
   Set pointer to beginning.
 
-  - ##### valid()
+  - ###### valid()
   Check if there is a current element after calls to rewind() or next().
   ```
   * @return     boolean
   ```
+
+### Functions
+
+[Top](#contents)
 
 ## Other Resources
 The University of the Ryukyus Department of Mechanical Systems Engineering maintains a php-mecab API documentation page that can be useful.   
@@ -544,3 +569,5 @@ The MeCab api documentation is up on googlecode.
   
 If you're using an IDE, fumikito has a gist that can help with php-mecab class recognition.  
 [https://gist.github.com/fumikito/bb172b4cf5648c7f8451](https://gist.github.com/fumikito/bb172b4cf5648c7f8451)
+
+[Top](#contents)
