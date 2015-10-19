@@ -5,6 +5,9 @@ Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab
   - [Installation](#installation)
   - [Usage](#usage)
     - [Initialization](#initialization)
+    - [Splitting Strings](#splitting-strings)
+    - [Parsing Strings](#parsing-strings)
+    - [Using Nodes](#using-nodes)
   - [Classes and Functions](#classes-and-functions)
     - [Classes](#classes)
       - [MeCab_Tagger](#mecab_tagger)
@@ -21,71 +24,287 @@ Coming...
 
 ## Usage   
 php-mecab can be used functionally or as an object.  I prefer the OOP approach, but I will try to cover both approaches in this guide.
+  - [Initialization](#initialization)
+  - [Splitting Strings](#splitting-strings)
+  - [Parsing Strings](#parsing-strings)
+  - [Using Nodes](#using-nodes)
 
 ### Initialization
-Once installed, you can new up a MeCab_Tagger object, passing an array containing a command line flag and a dictionary folder path to it as a parameter.   
-```
+MeCab usually requires a dictionary directory to be passed to it on initialization.  The location of the directory seems to vary by system, so find 'ipadic-utf8' on your system and pass the full folder path.  Often, there will be more than one 'ipadic-utf8' folders on a system.  Make sure the one you use contains a file called 'unk.dic'.  Without this, mecab will fail to initialize.  Pass the the dictionary directory to MeCab with the console flag '-d' in an array.   
+   
+The options passed to MeCab are the same as the options used in the command line program.  Check the man page for MeCab for all available options.   
+
+#### Object Orientated
+New up a [MeCab_Tagger](#__constructarguments-persistent) object, passing the array containing the command line flag '-d' and a dictionary folder path to it as a parameter.   
+```php
 $mecab = new \MeCab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);   
 ```   
-The variable $mecab will be a MeCab_Tagger object.  
-  
-'-d' is a console flag telling mecab that you are passing it a dictionary directory.  The location of the directory seems to vary by system, so find 'ipadic-utf8' on your system and pass the full folder path.  Often, there will be more than one 'ipadic-utf8' folders on a system.  Make sure the one you use contains a file called 'unk.dic'.  Without this, mecab will fail to initialize.
+The variable $mecab will be a [MeCab_Tagger](#mecab_tagger) object.  
 
-You can also use the function mecab_new().
-```
+#### Functional
+Use the function [mecab_new()](#mecab_newarguments-persistent) to get a mecab resource.
+```php
 $mecab = mecab_new(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
 ```  
-In this case, $mecab will be a resources of type 'mecab'.
+The $mecab variable will be a resources of type 'mecab'.
 
 [Top](#contents)
 
-### Parsing
+### Splitting Strings
+Split methods only split a string into an array of morphemes.  They provide no information about the morphemes.
 
-Once you have a MeCab_Tagger instance, you can start parsing.  Three methods are useful for basic parsing.    
+#### Object Orientated
+The [split()](#splitstring-dic_dir-user_dic-filter-persistent-static) method is static and so does not require an instance of MeCab_Tagger. It does, however, need the dictionary directory path to be passed as an argument in order to function. 
+```php
+$split = \Mecab_Tagger::split('眠いです', '/var/lib/mecab/dic/ipadic-utf8');
 
-#### parse(string)  
-Parses the string and returns the Mecab results as a string.   
+print_r($split);
+
+// Results
+Array
+(
+    [0] => 眠い
+    [1] => です
+)
+
 ```
-$results = $mecab->parse('行きます');
+
+If you have an instance of MeCab_Tagger you can also call the method on the object.  You will still need to pass the dictionary directory.
+```php
+$split = $mecab->split('たこ焼きが食べたい', '/var/lib/mecab/dic/ipadic-utf8');
+
+print_r($split);
+
+// Results
+Array
+(
+    [0] => たこ焼き
+    [1] => が
+    [2] => 食べ
+    [3] => たい
+)
+
+```
+
+#### Functional
+Use the funtion [mecab_split()](#mecab_splitstring-dic_dir-user_dic-filter-persistent).
+```php
+$split = mecab_split('パンダをいくらで買いますか', '/var/lib/mecab/dic/ipadic-utf8');
+
+print_r($split);
+
+// Results
+Array
+(
+    [0] => パンダ
+    [1] => を
+    [2] => いくら
+    [3] => で
+    [4] => 買い
+    [5] => ます
+    [6] => か
+)
+```
+
+[Top](#contents)
+
+### Parsing Strings
+MeCab will parse strings of Japanese text and return results in either string form or as a MeCab_Node.  MeCab_Nodes seem a little awkward and difficult to deal with at first, but they give the user a lot of power and make parsing results a little easier.
+
+#### Object Orientated
+To parse a string and get results in string form, a couple options exist.  The first is the [parse()](#parsestring-length-output_length) method.
+```php
+$results = $mecab->parse('チョコレートがやめられない');
 
 echo $results;
-```
-Will produce:
-```
-行き    動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ
-ます    助動詞,*,*,*,特殊・マス,基本形,ます,マス,マス
+
+// Results
+チョコレート    名詞,一般,*,*,*,*,チョコレート,チョコレート,チョコレート
+が      助詞,格助詞,一般,*,*,*,が,ガ,ガ
+やめ    動詞,自立,*,*,一段,未然形,やめる,ヤメ,ヤメ
+られ    動詞,接尾,*,*,一段,未然形,られる,ラレ,ラレ
+ない    助動詞,*,*,*,特殊・ナイ,基本形,ない,ナイ,ナイ
 EOS
 ```
 
-#### parseToNode(string)  
-Parses the string and returns the Mecab results as an instance of MeCab_Node.  
-```
-$node = $mecab->makeNodes($this->text);
+You could also use the [parseToString()](#parsetostringstring-length-output_length) method which produces the exact same results.
+```php
+$results = $mecab->parseToString('チョコレートがやめられない');
 
-foreach ($node as $line) {
-    echo $line->feature;
+echo $results;
+
+// Results
+チョコレート    名詞,一般,*,*,*,*,チョコレート,チョコレート,チョコレート
+が      助詞,格助詞,一般,*,*,*,が,ガ,ガ
+やめ    動詞,自立,*,*,一段,未然形,やめる,ヤメ,ヤメ
+られ    動詞,接尾,*,*,一段,未然形,られる,ラレ,ラレ
+ない    助動詞,*,*,*,特殊・ナイ,基本形,ない,ナイ,ナイ
+EOS
+```
+
+To get results in node form, use [parseToNode()](#parsetonodestring-length).
+```php
+$node = $mecab->parseToNode('ご飯作りたくない');
+
+var_dump($node);
+
+// Results
+object(MeCab_Node) (0) {
 }
 ```
-Will produce:
-```
-BOS/EOS,*,*,*,*,*,*,*,*動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ助動詞,*,*,*,特殊・マス,基本形,ます,マス,マスBOS/EOS,*,*,*,*,*,*,*,*
-```  
 
-#### split(string, dictionary_directory_path)  
-Rather than be on the MeCab_Tagger object, this method is a global with no connection to the object we made earlier.  Therefore, it requires the dictionary directory path to function.  Yeah, I know.  I don't get it either.  
-This method only returns an array of the text pieces with no Mecab info.
-```
-$results = mecab_split('行きます', '/var/lib/mecab/dic/ipadic-utf8');
+#### Functional
+To get results as a string, use the function [mecab_sparse_tostr()](#mecab_sparse_tostrmecab-string-length-output_length).
+```php
+$node = mecab_sparse_tostr($mecab, 'パンダいらないよね');
 
-print_r($results);
-```   
-Will produce:
+echo $node;
+
+// Results
+パンダ  名詞,一般,*,*,*,*,パンダ,パンダ,パンダ
+いら    動詞,自立,*,*,五段・ラ行,未然形,いる,イラ,イラ
+ない    助動詞,*,*,*,特殊・ナイ,基本形,ない,ナイ,ナイ
+よ      助詞,終助詞,*,*,*,*,よ,ヨ,ヨ
+ね      助詞,終助詞,*,*,*,*,ね,ネ,ネ
+EOS
 ```
-Array
-(
-    [0] => 行き
-    [1] => ます
-)
+
+For node results, use [mecab_sparse_tonode()](#mecab_sparse_tonodemecab-string-length).
+```php
+$node = mecab_sparse_tonode($mecab, 'これ長くなってる');
+
+var_dump($node);
+
+// Results
+resource(5) of type (mecab_node)
+```
+
+[Top](#contents)
+
+###Using Nodes
+Nodes make it easy to access the information MeCab provides and give users powerful ways to navigate through results.  
+  
+The node returned from the parseToNode() methods discussed in the previous section is the first node in the series and only represents the first morpheme.  In order to get information about the entire string, it is necessary to walk through them.  But before we tackle that, lets take a quick look at some of more useful methods we have at our disposal.
+
+#### Object Orientated
+  - [getPrev()](#getprev): Get the previous node in the series.
+  - [getNext()](#getnext): Get the next node in the series.
+  - [getSurface()](#getsurface): Get the surface (the MeCab info) of the node.
+  - [getFeature()](#getfeature): Get the feature (the original morpheme) of the node.
+  - [getLength()](#getlength): Get the length of the node's surface.
+  - [toArray()](#toarraydump_all): Get all the node's elements as an associative array.
+
+#### Functional
+  - [mecab_node_prev()](#mecab_node_prevnode): Get the previous node in the series.
+  - [mecab_node_next()](#mecab_node_nextnode): Get the next node in the series.
+  - [mecab_node_surface()](#mecab_node_surfacenode): Get the surface (the MeCab info) of the node.
+  - [mecab_node_feature()](#mecab_node_featurenode): Get the feature (the original morpheme) of the node.
+  - [mecab_node_length()](#mecab_node_lengthnode): Get the length of the node's surface.
+  - [mecab_node_toarray()](#mecab_node_toarraynode-dump_all): Get all the node's elements as an associative array.
+
+There are several other methods available, but these are the most useful at this point.  So let's see how we can walk through the nodes and extract the information we need.
+
+#### Object Orientated
+You can go about this a couple ways.
+The first way simply walks through the nodes with a foreach loop.  
+```php
+$node = $mecab->parseToNode('カレーライスにしようかな');
+
+foreach ($node as $n) {
+    echo $n->getFeature() . "\n";
+}
+
+// Results
+BOS/EOS,*,*,*,*,*,*,*,*
+名詞,一般,*,*,*,*,カレーライス,カレーライス,カレーライス
+助詞,格助詞,一般,*,*,*,に,ニ,ニ
+動詞,自立,*,*,サ変・スル,未然ウ接続,する,シヨ,シヨ
+助動詞,*,*,*,不変化型,基本形,う,ウ,ウ
+助詞,副助詞／並立助詞／終助詞,*,*,*,*,か,カ,カ
+助詞,終助詞,*,*,*,*,な,ナ,ナ
+BOS/EOS,*,*,*,*,*,*,*,*
+```
+This isn't necessairly a bad way to do it, but it's a little too magical for my liking.  If $node is the first node in the series (and it is, you can var_dump and verify this), it doesn't make sense to loop through each node as n where node is a single node.  I prefer to use MeCab_Node's methods to explicitly define what I am doing.
+```php
+$node = $mecab->parseToNode('これの方がいい');
+
+do {
+    echo $node->getFeature() . "\n";
+} while ($node = $node->getNext());
+
+// Results
+BOS/EOS,*,*,*,*,*,*,*,*
+名詞,代名詞,一般,*,*,*,これ,コレ,コレ
+助詞,連体化,*,*,*,*,の,ノ,ノ
+名詞,非自立,一般,*,*,*,方,ホウ,ホー
+助詞,格助詞,一般,*,*,*,が,ガ,ガ
+形容詞,自立,*,*,形容詞・イイ,基本形,いい,イイ,イイ
+BOS/EOS,*,*,*,*,*,*,*,*
+```
+This also makes it easy to extact the logic to a general purpose looping function.
+
+```php
+$node = $mecab->parseToNode('これの方がいい');
+
+walkThroughNodes($node, function($node) {
+    echo $node->getSurface() . "\n";
+});
+
+function walkThroughNodes(\Mecab_Node $node, $callback)
+{
+    do {
+        $callback($node);
+    } while ($node = $node->getNext());
+}
+
+// Results
+
+これ
+の
+方
+が
+いい
+
+```
+Now we have never have to worry about a basic walkthough again.  We can simply pass our walkThroughNodes function a node and a callback defining what we want to do with each node.
+
+#### Functional
+As mentioned in the Object Orientated section above, we can simply walk through the nodes with a foreach loop, but I don't like that approach.  Instead, lets use MeCab's nodes to our advantage.
+```php
+$node = mecab_sparse_tonode($mecab, 'ビール飲みたい');
+
+do {
+    echo mecab_node_surface($node) . "\n";
+} while ($node = mecab_node_next($node));
+
+// Results
+
+ビール
+飲み
+たい
+
+```
+Like we did in the Object Orientated section, lets extract this to a function that we can send a callback to.
+```php
+function walkThroughNodes($node, $callback)
+{
+    do {
+        echo mecab_node_surface($node) . "\n";
+    } while ($node = mecab_node_next($node));
+}
+
+$node = mecab_sparse_tonode($mecab, 'ビール飲みたい');
+
+walkThroughNodes($node, function ($node) {
+    echo mecab_node_feature($node) . "\n";
+});
+
+// Results
+
+ビール
+飲み
+たい
+
 ```
 
 [Top](#contents)
@@ -379,6 +598,8 @@ Return array of dictionary info.
  */
 ```
 
+[Top](#contents)
+
 #### Mecab_Node
 Returned by parseToNode method on Mecab_Tagger.
 ##### Methods
@@ -623,6 +844,8 @@ Get the formatted string of the node.
  */
 ```
 
+[Top](#contents)
+
 #### MeCab_Path
 Returned by getRPath and getLPath methods on MeCab_Node class.
 ##### Methods
@@ -681,6 +904,8 @@ Get the cumulative cost of the path.
  */
 ```
 
+[Top](#contents)
+
 #### MeCab_NodeIterator
 Node iterator class.
 ##### Methods
@@ -708,7 +933,7 @@ Return the current element.
 ###### next()
 Set pointer to next element.
 
-- ###### rewind()
+###### rewind()
 Set pointer to beginning.
 
 ###### valid()
@@ -719,9 +944,12 @@ Check if there is a current element after calls to rewind() or next().
  */
 ```
 
+[Top](#contents)
+
 ### Functions
   - [mecab_version()](#mecab_version)
   - [mecab_split()](#mecab_splitstring-dic_dir-user_dic-filter-persistent)
+  - [mecab_new()](#mecab_newarguments-persistent)
   - [mecab_destroy()](#mecab_destroymecab)
   - [mecab_get_partial](#mecab_get_partialmecab)
   - [mecab_set_partial()](#mecab_set_partialmecab-partial)
