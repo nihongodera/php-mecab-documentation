@@ -124,19 +124,23 @@ Main class used to parse text.
 ###### version() [static]  
 Return Mecab version.
 ```php
-* @return   string
+/**
+ * @return      string
+ */
 ```
 
 ###### split($string, $dic_dir, $user_dic, $filter, $persistent) [static]
 Split string into array of morphemes.  Usually requires the dictionary directory to be passed as a parameter.
 ```php
-* @param    string          $string         String to split.  
-* @param    string          $dic_dir        Path to dictionary directory. (Optional)    
-* @param    string          $user_dic       Path to user dictionary. (Optional)   
-* @param    callback        $filter         Filter function or method. (Optional)      
-* @param    boolean         $persistent     (Optional)    
-*
-* @return   array 
+/**
+ * @param       string          $string         String to split.  
+ * @param       string          $dic_dir        Path to dictionary directory. (Optional)    
+ * @param       string          $user_dic       Path to user dictionary. (Optional)   
+ * @param       callback        $filter         Filter function or method. (Optional)      
+ * @param       boolean         $persistent     (Optional)    
+ *
+ * @return      array 
+ */
 ```
 Example  
 ```php
@@ -156,68 +160,88 @@ Array
 ###### __construct($arguments, $persistent)
 Construct class instance.
 ```php
-* @param    array           $arguments      Command line arguments.        
-* @param    boolean         $persistent     (Optional)    
-*
-* @return   MeCab_Tagger 
+/**
+ * @param       array           $arguments      Command line arguments.        
+ * @param       boolean         $persistent     (Optional)    
+ *
+ * @return      MeCab_Tagger 
+ */
 ```
 
 ###### getPartial()  
 Get current partial parsing mode state.  
 ```php
-* @return   boolean
+/**
+ * @return      boolean
+ */
 ```
 
 ###### setPartial($bool)  
 Set partial parsing mode.  
 ```php
-* @param    boolean         $bool           Partial parsing mode.
+/**
+ * @param       boolean         $bool           Partial parsing mode.
+ */
 ```
 
 ###### getTheta()  
 Get current temparature parameter theta.  
 ```php
-* @return   float
+/**
+ * @return      float
+ */
 ```
 
 ###### setTheta($theta)  
 Set temparature parameter theta.
 ```php
-* @param    float/int       $theta          Temparature parameter theta.
+/**
+ * @param       float/int       $theta          Temparature parameter theta.
+ */
 ```
 
 ###### getLatticeLevel()  
 Get current lattice level.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### setLatticeLevel($level)  
 Set lattice level.
 ```php
-* @param    int             $level          Lattice level.
+/**
+ * @param       int             $level          Lattice level.
+ */
 ```
 
 ###### getAllMorphs()  
 Get all-morphs output mode.
 ```php
-* @return   bool
+/**
+ * @return      bool
+ */
 ```
 
 ###### setAllMorphs($bool)  
 Set all-morphs output mode.
 ```php
-* @param    bool            $bool           All-morphs output mode.
+/**
+ * @param       bool            $bool           All-morphs output mode.
+ */
 ```
 
 ###### parse($string, $length, $output_length)  
 Parse string and output results as string.
 ```php
-* @param    string          $string         String to be parsed.
-* @param    int             $length         Length to be analyzed. (Optional)  
-* @param    int             $output_length  Maximum length of output. (Optional)
-*
-* @return     string
+/**
+ * @param       string          $string         String to be parsed.
+ * @param       int             $length         Length to be analyzed. (Optional)  
+ * @param       int             $output_length  Maximum length of output. (Optional)
+ *
+ * @return      string
+ */
 ```
 Example
 ```php
@@ -235,11 +259,13 @@ EOS
 ###### parseToString($string, $length, $output_length)  
 Parse string and output results as string.
 ```php
-* @param    string          $string         String to be parsed.
-* @param    int             $length         Length to be analyzed. (Optional)  
-* @param    int             $output_length  Maximum length of output. (Optional)
-*
-* @return     string
+/**
+ * @param       string          $string         String to be parsed.
+ * @param       int             $length         Length to be analyzed. (Optional)  
+ * @param       int             $output_length  Maximum length of output. (Optional)
+ *
+ * @return      string
+ */
 ```
 Example
 ```php
@@ -257,10 +283,12 @@ EOS
 ###### parseToNode($string, $length)  
 Parse string and output results as MeCab_Node.
 ```php
-* @param    string          $string         String to be parsed.
-* @param    int             $length         Length to be analyzed. (Optional)
-*
-* @return     MeCab_Node
+/**
+ * @param       string          $string         String to be parsed.
+ * @param       int             $length         Length to be analyzed. (Optional)
+ *
+ * @return      MeCab_Node
+ */
 ```
 Example
 ```php
@@ -294,49 +322,61 @@ Array
 ###### parseNBest($n, $string, $length, $output_length)  
 Parse given sentence and output N-best results as string.  This method causes seg faults for me.
 ```php
-* @param    int             $n              Number of results to obtain.
-* @param    string          $string         String to be parsed.
-* @param    int             $length         Length to be analyzed. (Optional)
-* @param    int             $output_length  Maximum length of output. (Optional)
-*
-* @return     string
+/**
+ * @param       int             $n              Number of results to obtain.
+ * @param       string          $string         String to be parsed.
+ * @param       int             $length         Length to be analyzed. (Optional)
+ * @param       int             $output_length  Maximum length of output. (Optional)
+ *
+ * @return      string
+ */
 ```
 
 ###### parseNBestInit($string, $length)  
 Initialize N-best enumeration with a sentence. 
 ```php
-* @param    string          $string         String to be parsed.
-* @param    int             $length         Length to be analyzed. (Optional)
+/**
+ * @param       string          $string         String to be parsed.
+ * @param       int             $length         Length to be analyzed. (Optional)
 
-* @return   boolean
+ * @return      boolean
+ */
 ```
 
 ###### next($output_length)  
 Get the next result of N-Best as a string.
 ```php
-* @param    int             $output_length  Maximum length of output. (Optional)
-*
-* @return   string
+/**
+ * @param       int             $output_length  Maximum length of output. (Optional)
+ *
+ * @return      string
+ */
 ```
 
 ###### nextNode()  
 Get the next result of N-Best as a node.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### formatNode($node)  
 Format a node to a string.
 ```php
-* @param    MeCab_Node      $node           Node to be formatted.
-*
-* @return   string
+/**
+ * @param       MeCab_Node      $node           Node to be formatted.
+ *
+ * @return      string
+ */
 ```
 
 ###### dictionaryInfo()
 Return array of dictionary info.
 ```php
-* @return   array
+/**
+ * @return      array
+ */
 ```
 
 #### Mecab_Node
@@ -372,109 +412,145 @@ Returned by parseToNode method on Mecab_Tagger.
 ###### getIterator()
 Return MeCab_NodeIterator.
 ```php
-* @return   MeCab_NodeIterator
+/**
+ * @return      MeCab_NodeIterator
+ */
 ```
 
 ###### setTraverse($mode)
 Set the traverse mode.
 ```php
-* @param    long            $mode           Traverse mode.
+/**
+ * @param       long            $mode           Traverse mode.
+ */
 ```
 
 ###### getPrev()
 Get the previous node.  Return NULL if none.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### getNext()
 Get the next node.  Return NULL if none.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### getENext()
 Get the next node which has same end point as the given node.  Return NULL if none.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### getBNext()
 Get the next node which has same beginning point as the given node.  Return NULL if none.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### getRPath()
 Get the next node which has same end point as the given node.  Return NULL if none.
 ```php
-* @return   MeCab_Path
+/**
+ * @return      MeCab_Path
+ */
 ```
 
 ###### getLPath()
 Get the next node which has same beginning point as the given node.  Return NULL if none.
 ```php
-* @return   MeCab_Path
+/**
+ * @return      MeCab_Path
+ */
 ```
 
 ###### getSurface()
 Get the surface of the node.
 ```php
-* @return   string
+/**
+ * @return      string
+ */
 ```
 
 ###### getFeature()  
 Get the feature of the node.
 ```php
-* @return   string
+/**
+ * @return      string
+ */
 ```
 
 ###### getId()  
 Get the ID of the node.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getLength()
 Get the length of the node's surface.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getRLength()  
 Get the length of the node's surface including it's leading whitespace.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getRcAttr()
 Get the ID of the right context.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getLcAttr()
 Get the ID of the left context.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getPosId()
 Get the ID of the part of speech.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getCharType()
 Get the type of character.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getStat()
 Get the status of the node.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 0: Normal, MECAB_NOR_NODE  
 1: Unknown, MECAB_UNK_NODE  
@@ -484,51 +560,67 @@ Get the status of the node.
 ###### getAlpha()
 Get the forward log probability.
 ```php
-* @return   float
+/**
+ * @return      float
+ */
 ```
 
 ###### getBeta()
 Get the backward probability log.
 ```php
-* @return   float
+/**
+ * @return      float
+ */
 ```
 
 ###### getWCost()
 Get the word arising cost.
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getCost()
 Get the cumulative cost of the node. 
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### getProb()
 Get the marginal probability of the node.
 ```php
-* @return   float
+/**
+ * @return      float
+ */
 ```
 
 ###### isBest()
 Determine whether the node is the best solution.
 ```php
-* @return   boolean
+/**
+ * @return      boolean
+ */
 ```
 
 ###### toArray($dump_all)
 Get all elements of the node as an associative array.
 ```php
-* @param    boolean         $dump_all       Dump all related nodes if true. (Optional)
-*
-* @return   array
+/**
+ * @param       boolean         $dump_all       Dump all related nodes if true. (Optional)
+ *
+ * @return      array
+ */
 ```
 
 ###### toString()
 Get the formatted string of the node.
 ```php
-* @return   string
+/**
+ * @return      string
+ */
 ```
 
 #### MeCab_Path
@@ -544,37 +636,49 @@ Returned by getRPath and getLPath methods on MeCab_Node class.
 ###### getRNext()
 Get the rnext path. Return NULL if none.
 ```php
-* @return   MeCab_Path
+/**
+ * @return      MeCab_Path
+ */
 ```
 
 ###### getLNext()
 Get the lext path. Return NULL if none.
 ```php
-* @return   MeCab_Path
+/**
+ * @return      MeCab_Path
+ */
 ```
 
 ###### getRNode()
 Get the rnode. Return NULL if none.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### getLNode()
 Get the lnode. Return NULL if none.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### getProb()
 Get the marginal probability of the path.
 ```php
-* @return   float
+/**
+ * @return      float
+ */
 ```
 
 ###### getCost()
 Get the cumulative cost of the path. 
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 #### MeCab_NodeIterator
@@ -589,12 +693,16 @@ Node iterator class.
 ###### current()
 Return the current element.
 ```php
-* @return   MeCab_Node
+/**
+ * @return      MeCab_Node
+ */
 ```
 
 ###### key()
 ```php
-* @return   int
+/**
+ * @return      int
+ */
 ```
 
 ###### next()
@@ -606,7 +714,9 @@ Set pointer to beginning.
 ###### valid()
 Check if there is a current element after calls to rewind() or next().
 ```php
-* @return   boolean
+/**
+ * @return   boolean
+ */
 ```
 
 ### Functions
