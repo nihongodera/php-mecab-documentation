@@ -108,450 +108,450 @@ Main class used to parse text.
   - [getTheta()](#gettheta)
   - [setTheta()](#setthetatheta)
 
-  - ###### version() [static]  
-  Return Mecab version.
+###### version() [static]  
+Return Mecab version.
 
-  - ###### split(string, dic_dir, user_dic, filter, persistent) [static]
-  Split string into array of morphemes.  Usually requires the dictionary directory to be passed as a parameter.
-  ```
-  * @param    string        string          String to split.  
-  * @param    string        dic_dir         Path to dictionary directory. (Optional)    
-  * @param    string        user_dic        Path to user dictionary. (Optional)   
-  * @param    callback      filter          Filter function or method. (Optional)      
-  * @param    boolean       persistent      (Optional)    
-  *
-  * @return   array 
-  ```
-  Example  
-  ```
-   $mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
+###### split(string, dic_dir, user_dic, filter, persistent) [static]
+Split string into array of morphemes.  Usually requires the dictionary directory to be passed as a parameter.
+```
+* @param    string        string          String to split.  
+* @param    string        dic_dir         Path to dictionary directory. (Optional)    
+* @param    string        user_dic        Path to user dictionary. (Optional)   
+* @param    callback      filter          Filter function or method. (Optional)      
+* @param    boolean       persistent      (Optional)    
+*
+* @return   array 
+```
+Example  
+```
+$mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
 
-   $array = $mecab::split('行きます', '/var/lib/mecab/dic/ipadic-utf8');
+$array = $mecab::split('行きます', '/var/lib/mecab/dic/ipadic-utf8');
 
-   print_r($array);
+print_r($array);
 
-   Array
-   (
-     [0] => 行き
-     [1] => ます
-   )   
-  ```
+Array
+(
+ [0] => 行き
+ [1] => ます
+)   
+```
 
-  - ###### __construct(arguments, persistent)
-  Construct class instance.
-  ```
-  * @param    array         arguments       Command line arguments.        
-  * @param    boolean       persistent      (Optional)    
-  *
-  * @return     MeCab_Tagger 
-  ```
+###### __construct(arguments, persistent)
+Construct class instance.
+```
+* @param    array         arguments       Command line arguments.        
+* @param    boolean       persistent      (Optional)    
+*
+* @return     MeCab_Tagger 
+```
 
-  - ###### getPartial()  
-  Get current partial parsing mode state.  
-  ```
-  * @return     boolean
-  ```
+###### getPartial()  
+Get current partial parsing mode state.  
+```
+* @return     boolean
+```
 
-  - ###### setPartial(bool)  
-  Set partial parsing mode.  
-  ```
-  * @param      boolean     bool            Partial parsing mode.
-  ```
+###### setPartial(bool)  
+Set partial parsing mode.  
+```
+* @param      boolean     bool            Partial parsing mode.
+```
 
-  - ###### getTheta()  
-  Get current temparature parameter theta.  
-  ```
-  * @return     float
-  ```
+###### getTheta()  
+Get current temparature parameter theta.  
+```
+* @return     float
+```
 
-  - ###### setTheta(theta)  
-  Set temparature parameter theta.
-  ```
-  * @param      float/int   theta           Temparature parameter theta.
-  ```
+###### setTheta(theta)  
+Set temparature parameter theta.
+```
+* @param      float/int   theta           Temparature parameter theta.
+```
 
-  - ###### getLatticeLevel()  
-  Get current lattice level.
-  ```
-  * @return     int
-  ```
+###### getLatticeLevel()  
+Get current lattice level.
+```
+* @return     int
+```
 
-  - ###### setLatticeLevel(level)  
-  Set lattice level.
-  ```
-  * @param      int         level           Lattice level.
-  ```
+###### setLatticeLevel(level)  
+Set lattice level.
+```
+* @param      int         level           Lattice level.
+```
 
-  - ###### getAllMorphs()  
-  Get all-morphs output mode.
-  ```
-  * @return     bool
-  ```
+###### getAllMorphs()  
+Get all-morphs output mode.
+```
+* @return     bool
+```
 
-  - ###### setAllMorphs(bool)  
-  Set all-morphs output mode.
-  ```
-  * @param      bool        bool            All-morphs output mode.
-  ```
+###### setAllMorphs(bool)  
+Set all-morphs output mode.
+```
+* @param      bool        bool            All-morphs output mode.
+```
 
-  - ###### parse(string, length, output_length)  
-  Parse string and output results as string.
-  ```
-  * @param      string      string          String to be parsed.
-  * @param      int         length          Length to be analyzed. (Optional)  
-  * @param      int         output_length   Maximum length of output. (Optional)
-  *
-  * @return     string
-  ```
-  Example
-  ```
-  $mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
+###### parse(string, length, output_length)  
+Parse string and output results as string.
+```
+* @param      string      string          String to be parsed.
+* @param      int         length          Length to be analyzed. (Optional)  
+* @param      int         output_length   Maximum length of output. (Optional)
+*
+* @return     string
+```
+Example
+```
+$mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
 
-  $string = $mecab->parse('行きます');
+$string = $mecab->parse('行きます');
 
-  print_r($string);
+print_r($string);
 
-  行き    動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ
-  ます    助動詞,*,*,*,特殊・マス,基本形,ます,マス,マス
-  EOS
-  ```
+行き    動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ
+ます    助動詞,*,*,*,特殊・マス,基本形,ます,マス,マス
+EOS
+```
 
-  - ###### parseToString(string, length, output_length)  
-  Parse string and output results as string.
-  ```
-  * @param      string      string          String to be parsed.
-  * @param      int         length          Length to be analyzed. (Optional)  
-  * @param      int         output_length   Maximum length of output. (Optional)
-  *
-  * @return     string
-  ```
-  Example
-  ```
-  $mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
+###### parseToString(string, length, output_length)  
+Parse string and output results as string.
+```
+* @param      string      string          String to be parsed.
+* @param      int         length          Length to be analyzed. (Optional)  
+* @param      int         output_length   Maximum length of output. (Optional)
+*
+* @return     string
+```
+Example
+```
+$mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
 
-  $string = $mecab->parseToString('行きます');
+$string = $mecab->parseToString('行きます');
 
-  print_r($string);
+print_r($string);
 
-  行き    動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ
-  ます    助動詞,*,*,*,特殊・マス,基本形,ます,マス,マス
-  EOS
-  ```
+行き    動詞,自立,*,*,五段・カ行促音便,連用形,行く,イキ,イキ
+ます    助動詞,*,*,*,特殊・マス,基本形,ます,マス,マス
+EOS
+```
 
-  - ###### parseToNode(string, length)  
-  Parse string and output results as MeCab_Node.
-  ```
-  * @param      string      string          String to be parsed.
-  * @param      int         length          Length to be analyzed. (Optional)
-  *
-  * @return     MeCab_Node
-  ```
-  Example
-  ```
-  $mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
+###### parseToNode(string, length)  
+Parse string and output results as MeCab_Node.
+```
+* @param      string      string          String to be parsed.
+* @param      int         length          Length to be analyzed. (Optional)
+*
+* @return     MeCab_Node
+```
+Example
+```
+$mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
 
-  $node = $mecab->parseToNode('行きます');
+$node = $mecab->parseToNode('行きます');
 
-  print_r($node->toArray());
+print_r($node->toArray());
 
-  Array
-  (
-    [surface] => 
-    [feature] => BOS/EOS,*,*,*,*,*,*,*,*
-    [id] => 0
-    [length] => 0
-    [rlength] => 0
-    [rcAttr] => 0
-    [lcAttr] => 0
-    [posid] => 0
-    [char_type] => 0
-    [stat] => 2
-    [isbest] => 1
-    [alpha] => 0
-    [beta] => 0
-    [prob] => 0
-    [wcost] => 0
-    [cost] => 0
-  )
-  ```
+Array
+(
+[surface] => 
+[feature] => BOS/EOS,*,*,*,*,*,*,*,*
+[id] => 0
+[length] => 0
+[rlength] => 0
+[rcAttr] => 0
+[lcAttr] => 0
+[posid] => 0
+[char_type] => 0
+[stat] => 2
+[isbest] => 1
+[alpha] => 0
+[beta] => 0
+[prob] => 0
+[wcost] => 0
+[cost] => 0
+)
+```
 
-  - ###### parseNBest(n, string, length, output_length)  
-  Parse given sentence and output N-best results as string.  This method causes seg faults for me.
-  ```
-  * @param      int         n               Number of results to obtain.
-  * @param      string      string          String to be parsed.
-  * @param      int         length          Length to be analyzed. (Optional)
-  * @param      int         output_length   Maximum length of output. (Optional)
-  *
-  * @return     string
-  ```
+###### parseNBest(n, string, length, output_length)  
+Parse given sentence and output N-best results as string.  This method causes seg faults for me.
+```
+* @param      int         n               Number of results to obtain.
+* @param      string      string          String to be parsed.
+* @param      int         length          Length to be analyzed. (Optional)
+* @param      int         output_length   Maximum length of output. (Optional)
+*
+* @return     string
+```
 
-  - ###### parseNBestInit(string, length)  
-  Initialize N-best enumeration with a sentence. 
-  ```
-  * @param      string      string          String to be parsed.
-  * @param      int         length          Length to be analyzed. (Optional)
+###### parseNBestInit(string, length)  
+Initialize N-best enumeration with a sentence. 
+```
+* @param      string      string          String to be parsed.
+* @param      int         length          Length to be analyzed. (Optional)
 
-  * @return     boolean
-  ```
+* @return     boolean
+```
 
-  - ###### next(output_length)  
-  Get the next result of N-Best as a string.
-  ```
-  * @param      int         output_length   Maximum length of output. (Optional)
-  *
-  * @return     string
-  ```
+###### next(output_length)  
+Get the next result of N-Best as a string.
+```
+* @param      int         output_length   Maximum length of output. (Optional)
+*
+* @return     string
+```
 
-  - ###### nextNode()  
-  Get the next result of N-Best as a node.
-  ```
-  * @return     MeCab_Node
-  ```
+###### nextNode()  
+Get the next result of N-Best as a node.
+```
+* @return     MeCab_Node
+```
 
-  - ###### formatNode(node)  
-  Format a node to a string.
-  ```
-  * @param      MeCab_Node  node            Node to be formatted.
-  *
-  * @return     string
-  ```
+###### formatNode(node)  
+Format a node to a string.
+```
+* @param      MeCab_Node  node            Node to be formatted.
+*
+* @return     string
+```
 
-  - ###### dictionaryInfo()
-  Return array of dictionary info.
-  ```
-  * @return     array
-  ```
+###### dictionaryInfo()
+Return array of dictionary info.
+```
+* @return     array
+```
 
 #### Mecab_Node
 Returned by parseToNode method on Mecab_Tagger.
 ##### Methods
-  - ###### getIterator()
-  Return MeCab_NodeIterator.
-  ```
-  * @return     MeCab_NodeIterator
-  ```
+###### getIterator()
+Return MeCab_NodeIterator.
+```
+* @return     MeCab_NodeIterator
+```
 
-  - ###### setTraverse(mode)
-  Set the traverse mode.
-  ```
-  * @param      long        mode            Traverse mode.
-  ```
+###### setTraverse(mode)
+Set the traverse mode.
+```
+* @param      long        mode            Traverse mode.
+```
 
-  - ###### getPrev()
-  Get the previous node.  Return NULL if none.
-  ```
-  * @return     MeCab_Node
-  ```
+###### getPrev()
+Get the previous node.  Return NULL if none.
+```
+* @return     MeCab_Node
+```
 
-  - ###### getNext()
-  Get the next node.  Return NULL if none.
-  ```
-  * @return     MeCab_Node
-  ```
+###### getNext()
+Get the next node.  Return NULL if none.
+```
+* @return     MeCab_Node
+```
 
-  - ###### getENext()
-  Get the next node which has same end point as the given node.  Return NULL if none.
-  ```
-  * @return     MeCab_Node
-  ```
+###### getENext()
+Get the next node which has same end point as the given node.  Return NULL if none.
+```
+* @return     MeCab_Node
+```
 
-  - ###### getBNext()
-  Get the next node which has same beginning point as the given node.  Return NULL if none.
-  ```
-  * @return     MeCab_Node
-  ```
+###### getBNext()
+Get the next node which has same beginning point as the given node.  Return NULL if none.
+```
+* @return     MeCab_Node
+```
 
-  - ###### getRPath()
-  Get the next node which has same end point as the given node.  Return NULL if none.
-  ```
-  * @return     MeCab_Path
-  ```
+###### getRPath()
+Get the next node which has same end point as the given node.  Return NULL if none.
+```
+* @return     MeCab_Path
+```
 
-  - ###### getLPath()
-  Get the next node which has same beginning point as the given node.  Return NULL if none.
-  ```
-  * @return     MeCab_Path
-  ```
+###### getLPath()
+Get the next node which has same beginning point as the given node.  Return NULL if none.
+```
+* @return     MeCab_Path
+```
 
-  - ###### getSurface()
-  Get the surface of the node.
-  ```
-  * @return     string
-  ```
+###### getSurface()
+Get the surface of the node.
+```
+* @return     string
+```
 
-  - ###### getFeature()  
-  Get the feature of the node.
-  ```
-  * @return     string
-  ```
+###### getFeature()  
+Get the feature of the node.
+```
+* @return     string
+```
 
-  - ###### getId()  
-  Get the ID of the node.
-  ```
-  * @return     int
-  ```
+###### getId()  
+Get the ID of the node.
+```
+* @return     int
+```
 
-  - ###### getLength()
-  Get the length of the node's surface.
-  ```
-  * @return     int
-  ```
+###### getLength()
+Get the length of the node's surface.
+```
+* @return     int
+```
 
-  - ###### getRLength()  
-  Get the length of the node's surface including it's leading whitespace.
-  ```
-  * @return     int
-  ```
+###### getRLength()  
+Get the length of the node's surface including it's leading whitespace.
+```
+* @return     int
+```
 
-  - ###### getRcAttr()
-  Get the ID of the right context.
-  ```
-  * @return     int
-  ```
+###### getRcAttr()
+Get the ID of the right context.
+```
+* @return     int
+```
 
-  - ###### getLcAttr()
-  Get the ID of the left context.
-  ```
-  * @return     int
-  ```
+###### getLcAttr()
+Get the ID of the left context.
+```
+* @return     int
+```
 
-  - ###### getPosId()
-  Get the ID of the part of speech.
-  ```
-  * @return     int
-  ```
+###### getPosId()
+Get the ID of the part of speech.
+```
+* @return     int
+```
 
-  - ###### getCharType()
-  Get the type of character.
-  ```
-  * @return     int
-  ```
+###### getCharType()
+Get the type of character.
+```
+* @return     int
+```
 
-  - ###### getStat()
-  Get the status of the node.
-  ```
-  * @return     int
-  ```
-  0: Normal, MECAB_NOR_NODE  
-  1: Unknown, MECAB_UNK_NODE  
-  2: Beginning of Sentence, MECAB_BOS_NODE  
-  3: End of Sentence, MECAB_EOS_NODE  
+###### getStat()
+Get the status of the node.
+```
+* @return     int
+```
+0: Normal, MECAB_NOR_NODE  
+1: Unknown, MECAB_UNK_NODE  
+2: Beginning of Sentence, MECAB_BOS_NODE  
+3: End of Sentence, MECAB_EOS_NODE  
 
-  - ###### getAlpha()
-  Get the forward log probability.
-  ```
-  * @return     float
-  ```
+###### getAlpha()
+Get the forward log probability.
+```
+* @return     float
+```
 
-  - ###### getBeta()
-  Get the backward probability log.
-  ```
-  * @return     float
-  ```
+###### getBeta()
+Get the backward probability log.
+```
+* @return     float
+```
 
-  - ###### getWCost()
-  Get the word arising cost.
-  ```
-  * @return     int
-  ```
+###### getWCost()
+Get the word arising cost.
+```
+* @return     int
+```
 
-  - ###### getCost()
-  Get the cumulative cost of the node. 
-  ```
-  * @return     int
-  ```
+###### getCost()
+Get the cumulative cost of the node. 
+```
+* @return     int
+```
 
-  - ###### getProb()
-  Get the marginal probability of the node.
-  ```
-  * @return     float
-  ```
+###### getProb()
+Get the marginal probability of the node.
+```
+* @return     float
+```
 
-  - ###### isBest()
-  Determine whether the node is the best solution.
-  ```
-  * @return     boolean
-  ```
+###### isBest()
+Determine whether the node is the best solution.
+```
+* @return     boolean
+```
 
-  - ###### toArray(dump_all)
-  Get all elements of the node as an associative array.
-  ```
-  * @param      boolean     dump_all        Dump all related nodes if true. (Optional)
+###### toArray(dump_all)
+Get all elements of the node as an associative array.
+```
+* @param      boolean     dump_all        Dump all related nodes if true. (Optional)
 
-  * @return     array
-  ```
+* @return     array
+```
 
-  - ###### toString()
-  Get the formatted string of the node.
-  ```
-  * @return     string
-  ```
+###### toString()
+Get the formatted string of the node.
+```
+* @return     string
+```
 
 #### MeCab_Path
 Returned by getRPath and getLPath methods on MeCab_Node class.
 ##### Methods
-  - ###### getRNext()
-  Get the rnext path. Return NULL if none.
-  ```
-  * @return     MeCab_Path
-  ```
+###### getRNext()
+Get the rnext path. Return NULL if none.
+```
+* @return     MeCab_Path
+```
 
-  - ###### getLNext()
-  Get the lext path. Return NULL if none.
-  ```
-  * @return     MeCab_Path
-  ```
+###### getLNext()
+Get the lext path. Return NULL if none.
+```
+* @return     MeCab_Path
+```
 
-  - ###### getRNode()
-  Get the rnode. Return NULL if none.
-  ```
-  * @return     MeCab_Node
-  ```
+###### getRNode()
+Get the rnode. Return NULL if none.
+```
+* @return     MeCab_Node
+```
 
-  - ###### getLNode()
-  Get the lnode. Return NULL if none.
-  ```
-  * @return     MeCab_Node
-  ```
+###### getLNode()
+Get the lnode. Return NULL if none.
+```
+* @return     MeCab_Node
+```
 
-  - ###### getProb()
-  Get the marginal probability of the path.
-  ```
-  * @return     float
-  ```
+###### getProb()
+Get the marginal probability of the path.
+```
+* @return     float
+```
 
-  - ###### getCost()
-  Get the cumulative cost of the path. 
-  ```
-  * @return     int
-  ```
+###### getCost()
+Get the cumulative cost of the path. 
+```
+* @return     int
+```
 
 #### MeCab_NodeIterator
 Node iterator class.
 ##### Methods
-  - ###### current()
-  Return the current element.
-  ```
-  * @return     MeCab_Node
-  ```
+###### current()
+Return the current element.
+```
+* @return     MeCab_Node
+```
 
-  - ###### key()
-  ```
-  * @return     int
-  ```
+###### key()
+```
+* @return     int
+```
 
-  - ###### next()
-  Set pointer to next element.
+###### next()
+Set pointer to next element.
 
-  - ###### rewind()
-  Set pointer to beginning.
+- ###### rewind()
+Set pointer to beginning.
 
-  - ###### valid()
-  Check if there is a current element after calls to rewind() or next().
-  ```
-  * @return     boolean
-  ```
+###### valid()
+Check if there is a current element after calls to rewind() or next().
+```
+* @return     boolean
+```
 
 ### Functions
 
