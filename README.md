@@ -8,6 +8,7 @@ Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab
     - [Splitting Strings](#splitting-strings)
     - [Parsing Strings](#parsing-strings)
     - [Using Nodes](#using-nodes)
+    - [Basic MeCab](#basic-mecab)
   - [Classes and Functions](#classes-and-functions)
     - [Classes](#classes)
       - [MeCab_Tagger](#mecab_tagger)
@@ -16,6 +17,7 @@ Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab
       - [MeCab_NodeIterator](#mecab_nodeiterator)
     - [Functions](#functions)
   - [Other Resources](#other-resources)
+  - [Contributing](#contributing)
 
 ## Installation   
 (Please note that I am a Linux user and have only tested the Linux installation guide.  The Mac and Windows installation guides have been pieced together from other sources.)  
@@ -25,20 +27,20 @@ Before installing php-mecab, you must install MeCab.
 
 #### Linux
 Linux users can more than likely find MeCab in their distro repositories.  Simply install 'mecab' and the package 'mecab-ipadic-utf8'.  Ubuntu users can do this with the following command.
-```cmd
+```
 sudo apt-get install mecab mecab-ipadic-utf8
 ```
 
 If that doesn't work, you can download the source and build it yourself.  Note that this will require the package 'build-essential'.  
 First pull in MeCab.
-```cmd
+```
 wget https://mecab.googlecode.com/files/mecab-0.996.tar.gz
 tar zxfv mecab-0.996.tar.gz
 cd mecab-0.996
 ./configure --with-charset=utf8 --enable-utf8-only
 ```
 Then get the dictionary file.
-```cmd
+```
 wget https://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
 tar zxfv mecab-ipadic-2.7.0-20070801.tar.gz
 cd mecab-ipadic-2.7.0-20070801
@@ -46,22 +48,22 @@ cd mecab-ipadic-2.7.0-20070801
 ```
 
 #### Mac OS X
-Both MeCab and the required dictionary (mecab-ipadic-utf8) are in MacPorts.  If that doesn't work, try downloading the source and building it yourself.  You can get the source and the dictionary by using curl to get the packages from the following urls:  
+Both MeCab and the required dictionary (mecab-ipadic-utf8) are in MacPorts.  If that doesn't work, try downloading the source and building it yourself.  You can get the source and the dictionary from the following urls:  
 https://mecab.googlecode.com/files/mecab-0.996.tar.gz  
 https://mecab.googlecode.com/files/mecab-ipadic-2.7.0-20070801.tar.gz
 
 I believe you can build these files with Xcode.  Somebody correct me if I'm wrong.
 
 #### Windows
-Download the installer from this url: https://mecab.googlecode.com/files/mecab-0.996.exe
+Download the installer from this url: https://mecab.googlecode.com/files/mecab-0.996.exe  
 
 ### Install php-mecab
-First, verify that you have MeCab on your computer by testing it in the command line.  Type `mecab` and if you don't get an error, things are looking good.  If you get an error that looks something like this 'param.cpp(69) [ifs] no such file or directory: /usr/local/lib/mecab/dic/ipadic/dicrc' you need to find your dictionary file and pass it as a parameter.  The directory is called 'ipadic-utf8' and needs to contain a file called 'unk.dic'.
-```cmd
+First, verify that you have MeCab on your computer by testing it in the command line.  Type `mecab` and if you don't get an error, things are looking good.  If you get an error that looks something like this `param.cpp(69) [ifs] no such file or directory: /usr/local/lib/mecab/dic/ipadic/dicrc` you need to find your dictionary file and pass it as a parameter.  The directory is called 'ipadic-utf8' and needs to contain a file called 'unk.dic'.
+```
 mecab --dicdir=/path/to/dictionary/dic/ipadic/
 ```
-Next, type some Japanese and make sure you get an appropriate response.
-```cmd
+Once you get mecab to start, type some Japanese and make sure you get an appropriate response.
+```
 ~$ mecab
 やった！
 やっ    動詞,自立,*,*,五段・ラ行,連用タ接続,やる,ヤッ,ヤッ
@@ -75,23 +77,23 @@ Install the following dependencies:
 php5-dev  
 libmecab-dev  
 build-essential  
-```cmd
+```
 sudo apt-get install php5-dev libmecab-dev build-essential
 ```  
 
 Download the php-mecab source.
-```cmd
+```
 wget https://github.com/rsky/php-mecab/archive/master.zip
 ```
 
 You will need to find the package 'mecab-config'.  Let's use 'locate' because its easy.
-```cmd
+```
 sudo updatedb
 locate mecab-config
 ```
 That should give you a path that looks something like /usr/bin/mecab-config.  
 We should now be ready to build our package.  Put your mecab-config path after the --with-mecab-config option.  
-```cmd
+```
 unzip master.zip
 cd php-mecab-master/mecab
 phpize
@@ -100,45 +102,49 @@ sudo make
 sudo make install
 ```
 
-After completing this step, you should have a mecab.so file in /usr/lib/php5/20121212.  Let's check.
-```cmd
-cd /usr/lib/php5/20121212
-ls
-```
+After completing this step, you should have a mecab.so.  Go to /usr/lib/php5/ and find the package with a name that looks is similar to this: 20131226. Have a look in that file and mecab.so should be in there.
 
-We now need to enable the mod.  Move to /etc/php5/mods-available/
-```cmd
+We now just need to enable the mod.  Move to /etc/php5/mods-available/
+```
 cd /etc/php5/mods-available/
 ```
 Next, create a new .ini file for mecab.
-```cmd
+```
 sudo touch mecab.ini
 echo "extension=mecab.so" | sudo tee -a mecab.ini
 ```
 And then we need to activate the module.
-```cmd
+```
 sudo php5enmod mecab
 ```
 Oce this is done, you simply need to restart your web server.  
 For Apache:
-```cmd
+```
 sudo service apache2 restart
 ```
 And for nginx:
-```cmd
+```
 sudo service nginx restart
 ```
 
 You should be ready to go. 
 
 #### Mac OS X
+Instructions should be the same as for Linux, but you may require the package xcode in order to properly compile the source code.
 
 #### Windows
+Installing php-mecab is the same as installing any other php extension.  The following guide may be of use:  
+http://php.net/manual/en/install.windows.extensions.php  
 
-
-
-
-  
+According to one of the php-mecab readme files:
+>The extension provides the VisualStudio V6 project file mecab.dsp.
+>To compile the extension you open this file using VisualStudio,
+>select the apropriate configuration for your installation
+>(either "Release_TS" or "Debug_TS") and create "php_mecab.dll"
+>
+>After successfull compilation you have to copy the newly
+>created "php_mecab.dll" to the PHP
+>extension directory (default: C:\PHP\extensions).
 
 [Top](#contents)
 
@@ -152,7 +158,7 @@ php-mecab can be used functionally or as an object.  I prefer the OOP approach, 
 ### Initialization
 MeCab sometimes requires a dictionary directory to be passed to it on initialization.  The location of the directory seems to vary by system, so find 'ipadic-utf8' on your system and pass the full folder path.  Often, there will be more than one 'ipadic-utf8' folders on a system.  Make sure the one you use contains a file called 'unk.dic'.  Without this, mecab will fail to initialize.  Pass the the dictionary directory to MeCab with the console flag '-d' in an array.   
    
-The options passed to MeCab are the same as the options used in the command line program.  Check the man page for MeCab for all available options.   
+The options passed to MeCab are the same as the options used in the command line program.  Send them to the constructor in an array.  Check the man page for MeCab for all available options.   
 
 #### Object Orientated
 New up a [MeCab_Tagger](#__constructarguments-persistent) object.
@@ -161,16 +167,18 @@ $mecab = new \MeCab_Tagger();
 ```
 If it does't work, or you get an error, try passing the array containing the command line flag '-d' and a dictionary folder path to it as a parameter.   
 ```php
-$mecab = new \MeCab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);   
+$mecab = new \MeCab_Tagger(['-d', '/path/to/dictionary/mecab/dic/ipadic-utf8']);   
 ```   
 The variable $mecab will be a [MeCab_Tagger](#mecab_tagger) object.  
+**Throughout this guide, when I refer to *$mecab* in the object orientated sections, it will be a MeCab_Tagger object.**
 
 #### Functional
 Use the function [mecab_new()](#mecab_newarguments-persistent) to get a mecab resource.  As with the Object Orientated approach, you may or may not have to pass it a dictionary directory.
 ```php
-$mecab = mecab_new(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
+$mecab = mecab_new(['-d', '/path/to/dictionary/mecab/dic/ipadic-utf8']);
 ```  
-The $mecab variable will be a resource of type 'mecab'.
+The $mecab variable will be a resource of type 'mecab'.   
+**Throughout this guide, when I refer to *$mecab* in the functional sections, it will be a MeCab resource.**
 
 [Top](#contents)
 
@@ -178,9 +186,13 @@ The $mecab variable will be a resource of type 'mecab'.
 Split methods only split a string into an array of morphemes.  They provide no information about the morphemes.
 
 #### Object Orientated
-The [split()](#splitstring-dic_dir-user_dic-filter-persistent-static) method is static and so does not require an instance of MeCab_Tagger. It does, however, need the dictionary directory path to be passed as an argument in order to function. 
+The [split()](#splitstring-dic_dir-user_dic-filter-persistent-static) method is static and so does not require an instance of MeCab_Tagger. It might, however, need the dictionary directory path to be passed as an argument in order to function. 
 ```php
-$split = \Mecab_Tagger::split('眠いです', '/var/lib/mecab/dic/ipadic-utf8');
+$split = \Mecab_Tagger::split('眠いです');
+```
+Or if that doesnt work.
+```php
+$split = \Mecab_Tagger::split('眠いです', '/path/to/dictionary/mecab/dic/ipadic-utf8');
 
 print_r($split);
 
@@ -195,7 +207,7 @@ Array
 
 If you have an instance of MeCab_Tagger you can also call the method on the object.  You will still need to pass the dictionary directory.
 ```php
-$split = $mecab->split('たこ焼きが食べたい', '/var/lib/mecab/dic/ipadic-utf8');
+$split = $mecab->split('たこ焼きが食べたい');
 
 print_r($split);
 
@@ -211,9 +223,13 @@ Array
 ```
 
 #### Functional
-Use the funtion [mecab_split()](#mecab_splitstring-dic_dir-user_dic-filter-persistent).
+Use the funtion [mecab_split()](#mecab_splitstring-dic_dir-user_dic-filter-persistent).  It may or may not require the dictionary directory to be passed.
 ```php
-$split = mecab_split('パンダをいくらで買いますか', '/var/lib/mecab/dic/ipadic-utf8');
+$split = mecab_split('パンダをいくらで買いますか');
+```
+Or....
+```php
+$split = mecab_split('パンダをいくらで買いますか', '/path/to/dictionary/mecab/dic/ipadic-utf8');
 
 print_r($split);
 
@@ -308,25 +324,26 @@ resource(5) of type (mecab_node)
 ###Using Nodes
 Nodes make it easy to access the information MeCab provides and give users powerful ways to navigate through results.  
   
-The node returned from the parseToNode() methods discussed in the previous section is the first node in the series and only represents the first morpheme.  In order to get information about the entire string, it is necessary to walk through them.  But before we tackle that, lets take a quick look at some of more useful methods we have at our disposal.
+The node returned from the parseToNode() methods discussed in the previous section is the first node in the series and only represents the first morpheme.  In order to get information about the entire string, it is necessary to walk through all the nodes in the series.  But before we tackle that, lets take a quick look at some of more useful methods we have at our disposal.
 
 #### Object Orientated
   - [getPrev()](#getprev): Get the previous node in the series.
   - [getNext()](#getnext): Get the next node in the series.
-  - [getSurface()](#getsurface): Get the surface (the MeCab info) of the node.
-  - [getFeature()](#getfeature): Get the feature (the original morpheme) of the node.
+  - [getSurface()](#getsurface): Get the surface (the original morpheme) of the node.
+  - [getFeature()](#getfeature): Get the feature (the MeCab info) of the node.
   - [getLength()](#getlength): Get the length of the node's surface.
   - [toArray()](#toarraydump_all): Get all the node's elements as an associative array.
 
 #### Functional
   - [mecab_node_prev()](#mecab_node_prevnode): Get the previous node in the series.
   - [mecab_node_next()](#mecab_node_nextnode): Get the next node in the series.
-  - [mecab_node_surface()](#mecab_node_surfacenode): Get the surface (the MeCab info) of the node.
-  - [mecab_node_feature()](#mecab_node_featurenode): Get the feature (the original morpheme) of the node.
+  - [mecab_node_surface()](#mecab_node_surfacenode): Get the surface (the original morpheme) of the node.
+  - [mecab_node_feature()](#mecab_node_featurenode): Get the feature (the MeCab info) of the node.
   - [mecab_node_length()](#mecab_node_lengthnode): Get the length of the node's surface.
   - [mecab_node_toarray()](#mecab_node_toarraynode-dump_all): Get all the node's elements as an associative array.
 
-There are several other methods available, but these are the most useful at this point.  So let's see how we can walk through the nodes and extract the information we need.
+There are several other methods available, but these are the most useful at this point.  For a full list of methods, see the [Classes and Functions](#classes-and-functions) section of this guide.  
+So let's see how we can walk through the nodes and extract the information we need.
 
 #### Object Orientated
 You can go about this a couple ways.
@@ -348,7 +365,7 @@ BOS/EOS,*,*,*,*,*,*,*,*
 助詞,終助詞,*,*,*,*,な,ナ,ナ
 BOS/EOS,*,*,*,*,*,*,*,*
 ```
-This isn't necessairly a bad way to do it, but it's a little too magical for my liking.  If $node is the first node in the series (and it is, you can var_dump and verify this), it doesn't make sense to loop through each node as n where node is a single node.  I prefer to use MeCab_Node's methods to explicitly define what I am doing.
+This isn't necessairly a bad way to do it, but it's a little too magical for my liking.  If $node is the first node in the series (and it is, you can var_dump and verify this), it doesn't make sense to loop through each $node as $n where $node is a single node and $n is also a single node.  Instead, I prefer to use MeCab_Node's methods to explicitly define what I am doing.
 ```php
 $node = $mecab->parseToNode('これの方がいい');
 
@@ -365,21 +382,23 @@ BOS/EOS,*,*,*,*,*,*,*,*
 形容詞,自立,*,*,形容詞・イイ,基本形,いい,イイ,イイ
 BOS/EOS,*,*,*,*,*,*,*,*
 ```
-This also makes it easy to extact the logic to a general purpose looping function.
+We can extact the logic to a general purpose looping function.
 
 ```php
-$node = $mecab->parseToNode('これの方がいい');
-
-walkThroughNodes($node, function($node) {
-    echo $node->getSurface() . "\n";
-});
-
 function walkThroughNodes(\Mecab_Node $node, $callback)
 {
     do {
         $callback($node);
     } while ($node = $node->getNext());
 }
+```
+We can then pass our walkThroughNodes function another function to tell it what to do with each node.
+```php
+$node = $mecab->parseToNode('これの方がいい');
+
+walkThroughNodes($node, function($node) {
+    echo $node->getSurface() . "\n";
+});
 
 // Results
 
@@ -390,7 +409,7 @@ function walkThroughNodes(\Mecab_Node $node, $callback)
 いい
 
 ```
-Now we have never have to worry about a basic walkthough again.  We can simply pass our walkThroughNodes function a node and a callback defining what we want to do with each node.
+Now we have never have to worry about a basic walkthough again.  We can simply pass our walkThroughNodes function a node and a callback.
 
 #### Functional
 As mentioned in the Object Orientated section above, we can simply walk through the nodes with a foreach loop, but I don't like that approach.  Instead, lets use MeCab's nodes to our advantage.
@@ -413,14 +432,16 @@ Like we did in the Object Orientated section, lets extract this to a function th
 function walkThroughNodes($node, $callback)
 {
     do {
-        echo mecab_node_surface($node) . "\n";
+        $callback($node);
     } while ($node = mecab_node_next($node));
 }
-
+```
+We can cuse our walkThroughNodes function like this.
+```php
 $node = mecab_sparse_tonode($mecab, 'ビール飲みたい');
 
 walkThroughNodes($node, function ($node) {
-    echo mecab_node_feature($node) . "\n";
+    echo mecab_node_surface($node) . "\n";
 });
 
 // Results
@@ -430,6 +451,50 @@ walkThroughNodes($node, function ($node) {
 たい
 
 ```
+
+### Basic MeCab
+Now that we can extract information from Japanese strings using MeCab and php-mecab, let's take a quick look at what this information means. 
+```php
+$mecab = new \Mecab_Tagger(['-d', '/var/lib/mecab/dic/ipadic-utf8']);
+
+$string = $mecab->parseToString('行く');
+
+echo $string;
+
+// Results
+行く    動詞,自立,*,*,五段・カ行促音便,基本形,行く,イク,イク
+EOS
+```
+Commonly in MeCab you will see BOS and EOS.  These mean 'Beginning of Sentence' and 'End of Sentence', respectively.  In output lines, there are generally two parts, the surface and the feature.  The surface is the original morpheme and the feature is MeCab info.  In our case, '行く' is the surface and '動詞,自立,*,*,五段・カ行促音便,基本形,行く,イク,イク' is the feature.  Remember you can use nodes to easily extract this information.  
+  
+The feature is a comma seperated string with nine sections.
+Section 1: Main part of speech category  
+Section 2: Part of speech sub-category  
+Section 3: Part of speech sub-category   
+Section 4: Part of speech sub-category   
+Section 5: Inflection type   
+Section 6: Inflection form   
+Section 7: Lemma (the root word found in the dictionary)   
+Section 8: Reading   
+Section 9: Pronunciation   
+
+In our example:
+```php
+print_r(explode(',', '動詞,自立,*,*,五段・カ行促音便,基本形,行く,イク,イク'));
+
+// Results
+    [0] => 動詞  // Main part of speech category
+    [1] => 自立  // Part of speech sub-category
+    [2] => *  // Part of speech sub-category (none)
+    [3] => *  // Part of speech sub-category (none)
+    [4] => 五段・カ行促音便  // Inflection type
+    [5] => 基本形  // Inflection form
+    [6] => 行く  // Lemma (the root word found in the dictionary)
+    [7] => イク  // Reading
+    [8] => イク  // Pronunciation
+```
+
+What you do with this is up to you.  
 
 [Top](#contents)
 
@@ -1642,10 +1707,10 @@ Get the cumulative cost of the path.
 The University of the Ryukyus Department of Mechanical Systems Engineering maintains a php-mecab API documentation page that can be useful.   
 [http://mechsys.tec.u-ryukyu.ac.jp/~oshiro/php_mecab_apis.html](http://mechsys.tec.u-ryukyu.ac.jp/~oshiro/php_mecab_apis.html)    
   
-The MeCab documentation is here on github, but its in Japanese only.   
+The MeCab documentation is here on github, but its in Japanese only and is a little outdated.   
 [http://taku910.github.io/mecab/](http://taku910.github.io/mecab/)    
 
-jordwest has translated parts of it into English here.   
+jordwest has translated parts the MeCab documentation into English here.   
 [https://github.com/jordwest/mecab-docs-en](https://github.com/jordwest/mecab-docs-en)
   
 The MeCab api documentation is up on googlecode.  
@@ -1655,3 +1720,6 @@ If you're using an IDE, fumikito has a gist that can help with php-mecab class r
 [https://gist.github.com/fumikito/bb172b4cf5648c7f8451](https://gist.github.com/fumikito/bb172b4cf5648c7f8451)
 
 [Top](#contents)
+
+## Contributing
+Please help me to improve this guide.  If you find errors or places where you feel this guide is lacking, please create an issue or make a pull request.  Also, I would love to see this guide translated into other languages, especially Japanese.  Any help with translations would be much appreciated.
