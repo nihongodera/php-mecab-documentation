@@ -154,6 +154,7 @@ php-mecab can be used functionally or as an object.  I prefer the OOP approach, 
   - [Splitting Strings](#splitting-strings)
   - [Parsing Strings](#parsing-strings)
   - [Using Nodes](#using-nodes)
+  - [Basic MeCab](#basic-mecab)
 
 ### Initialization
 MeCab sometimes requires a dictionary directory to be passed to it on initialization.  The location of the directory seems to vary by system, so find 'ipadic-utf8' on your system and pass the full folder path.  Often, there will be more than one 'ipadic-utf8' folders on a system.  Make sure the one you use contains a file called 'unk.dic'.  Without this, mecab will fail to initialize.  Pass the the dictionary directory to MeCab with the console flag '-d' in an array.   
@@ -392,7 +393,7 @@ function walkThroughNodes(\Mecab_Node $node, $callback)
     } while ($node = $node->getNext());
 }
 ```
-We can then pass our walkThroughNodes function another function to tell it what to do with each node.
+We can then pass our walkThroughNodes function a closure to tell it what to do with each node.
 ```php
 $node = $mecab->parseToNode('これの方がいい');
 
@@ -465,9 +466,10 @@ echo $string;
 行く    動詞,自立,*,*,五段・カ行促音便,基本形,行く,イク,イク
 EOS
 ```
-Commonly in MeCab you will see BOS and EOS.  These mean 'Beginning of Sentence' and 'End of Sentence', respectively.  In output lines, there are generally two parts, the surface and the feature.  The surface is the original morpheme and the feature is MeCab info.  In our case, '行く' is the surface and '動詞,自立,*,*,五段・カ行促音便,基本形,行く,イク,イク' is the feature.  Remember you can use nodes to easily extract this information.  
+Commonly in MeCab you will see BOS and EOS.  These mean 'Beginning of Sentence' and 'End of Sentence', respectively.   
+In output lines, there are generally two parts, the surface and the feature.  The surface is the original morpheme and the feature is MeCab info.  In our case, '行く' is the surface and '動詞,自立,*,*,五段・カ行促音便,基本形,行く,イク,イク' is the feature.  Remember you can use nodes to easily extract this information.  
   
-The feature is a comma seperated string with nine sections.
+The feature is a comma seperated string with nine sections.    
 Section 1: Main part of speech category  
 Section 2: Part of speech sub-category  
 Section 3: Part of speech sub-category   
@@ -494,7 +496,7 @@ print_r(explode(',', '動詞,自立,*,*,五段・カ行促音便,基本形,行�
     [8] => イク  // Pronunciation
 ```
 
-What you do with this is up to you.  
+What you do with this information is up to you!  
 
 [Top](#contents)
 
