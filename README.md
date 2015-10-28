@@ -81,6 +81,12 @@ build-essential
 sudo apt-get install php5-dev libmecab-dev build-essential
 ```  
 
+First, try the installation script in this repository called install-php-mecab.sh.
+```
+sh ./install-php-mecab.sh 
+```
+It works for me, but if it doesnt work for you, read on.
+
 Download the php-mecab source.
 ```
 wget https://github.com/rsky/php-mecab/archive/master.zip
@@ -383,7 +389,7 @@ BOS/EOS,*,*,*,*,*,*,*,*
 形容詞,自立,*,*,形容詞・イイ,基本形,いい,イイ,イイ
 BOS/EOS,*,*,*,*,*,*,*,*
 ```
-We can extact the logic to a general purpose looping function.
+We can extract the logic to a general purpose looping function.
 
 ```php
 function walkThroughNodes(\Mecab_Node $node, $callback)
@@ -1719,7 +1725,9 @@ The MeCab api documentation is up on googlecode.
 [https://mecab.googlecode.com/svn/trunk/mecab/doc/doxygen/index.html](https://mecab.googlecode.com/svn/trunk/mecab/doc/doxygen/index.html)
   
 If you're using an IDE, fumikito has a gist that can help with php-mecab class recognition.  
-[https://gist.github.com/fumikito/bb172b4cf5648c7f8451](https://gist.github.com/fumikito/bb172b4cf5648c7f8451)
+[https://gist.github.com/fumikito/bb172b4cf5648c7f8451](https://gist.github.com/fumikito/bb172b4cf5648c7f8451)  
+  
+If an app your using requires php-mecab and you'd like to use Travis CI, check out the example-travis.yml file and the accompanying travis-install-php.sh file in this repository.
 
 [Top](#contents)
 
