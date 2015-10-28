@@ -81,7 +81,7 @@ build-essential
 sudo apt-get install php5-dev libmecab-dev build-essential
 ```  
 
-First, try the installation script in this repository called install-php-mecab.sh.
+First, try the installation script in this repository called [install-php-mecab.sh](https://github.com/nihongodera/php-mecab-documentation/blob/master/install-php-mecab.sh).
 ```
 sh ./install-php-mecab.sh 
 ```
@@ -1727,7 +1727,7 @@ The MeCab api documentation is up on googlecode.
 If you're using an IDE, fumikito has a gist that can help with php-mecab class recognition.  
 [https://gist.github.com/fumikito/bb172b4cf5648c7f8451](https://gist.github.com/fumikito/bb172b4cf5648c7f8451)  
   
-If an app your using requires php-mecab and you'd like to use Travis CI, check out the example-travis.yml file and the accompanying travis-install-php.sh file in this repository.
+If an app your using requires php-mecab and you'd like to use Travis CI, check out the [example-travis.yml](https://github.com/nihongodera/php-mecab-documentation/blob/master/example-travis.yml) file and the accompanying [travis-install-php.sh](https://github.com/nihongodera/php-mecab-documentation/blob/master/travis-install-php-mecab.sh) file in this repository.
 
 [Top](#contents)
 
