@@ -89,11 +89,19 @@ EOS
 
 #### Linux
 Install the following dependencies:  
-php5-dev  
+php5:    
+php5-dev
 libmecab-dev  
 build-essential  
 ```
 sudo apt-get install php5-dev libmecab-dev build-essential
+```  
+php7:    
+php7.0-dev
+libmecab-dev  
+build-essential  
+```
+sudo apt-get install php7.0-dev libmecab-dev build-essential
 ```  
 
 Download the php-mecab source.
@@ -138,7 +146,9 @@ sudo apt-get install mecab mecab-ipadic-utf8 mecab-utils libmecab-dev
 
 After completing this step, you should have a mecab.so.  Go to /usr/lib/php5/ and find the package with a name that looks is similar to this: 20131226. Have a look in that file and mecab.so should be in there.
 
-We now just need to enable the mod.  Move to /etc/php5/mods-available/
+We now just need to enable the mod.  
+For php5:    
+Move to /etc/php5/mods-available/
 ```
 cd /etc/php5/mods-available/
 ```
@@ -150,7 +160,25 @@ echo "extension=mecab.so" | sudo tee -a mecab.ini
 And then we need to activate the module.
 ```
 sudo php5enmod mecab
+``` 
+___
+
+For php7:    
+Move to /etc/php/php7.0/mods-available/
 ```
+cd /etc/php/php7.0/mods-available/
+```
+Next, create a new .ini file for mecab.
+```
+sudo touch mecab.ini
+echo "extension=mecab.so" | sudo tee -a mecab.ini
+```
+And then we need to activate the module.
+```
+sudo phpenmod -v 7.0 mecab
+``` 
+___
+
 Once this is done, you simply need to restart your web server.  
 For Apache:
 ```
