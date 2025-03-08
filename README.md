@@ -1,3 +1,6 @@
+> [!WARNING]
+> This repository will no longer be updated. This documentation has moved to my fork of the php-mecab project here: https://github.com/nihongodera/php-mecab.
+
 # php-mecab Documentation   
 Documentation for the package [rsky/php-mecab](https://github.com/rsky/php-mecab).
 
